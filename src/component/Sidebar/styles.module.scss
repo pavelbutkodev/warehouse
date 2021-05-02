@@ -1,0 +1,18 @@
+.sidebarWrapper {
+  width: 253px;
+  height: calc(100vh - 88px);
+  background: #FFFFFF;
+  box-shadow: inset -1px 0px 0px #F8F8F8;
+  padding-top: 30px;
+
+  p {
+    margin-bottom: 10px;
+    padding-left: 60px;
+
+    img {
+      height: 20px;
+      width: 20px;
+      margin-right: 5px;
+    }
+  }
+}
