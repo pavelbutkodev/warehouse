@@ -2,7 +2,6 @@ import {
 	BrowserRouter as Router,
 	Switch,
 	Route,
-	Redirect
 } from "react-router-dom";
 
 import Nav from "./component/Nav";
@@ -13,8 +12,8 @@ import styles from './styles.module.scss';
 const App = () => {
 	return (
 		<div className={styles.wrapper}>
-			<Nav/>
 			<Router>
+			<Nav/>
 				<Switch>
 					{routes.map((route, index) => (
 						<Route
@@ -24,7 +23,6 @@ const App = () => {
 						/>
 					))}
 				</Switch>
-				<Redirect from="/" to="/main/" />
 			</Router>
 		</div>
 	)

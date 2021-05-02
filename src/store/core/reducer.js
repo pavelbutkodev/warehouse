@@ -4,7 +4,7 @@ import {
 
 
 const INITIAL_STATE = {
-  warehouses: [
+	warehouses: [
 		{
 			id: 0,
 			name: 'First ware',
@@ -22,7 +22,7 @@ const INITIAL_STATE = {
 	],
 };
 
-export default (state = INITIAL_STATE, {type, payload}) => {
+const core = (state = INITIAL_STATE, {type, payload}) => {
 	switch (type) {
 		case LOGIN_USER:
 			return {
@@ -34,3 +34,5 @@ export default (state = INITIAL_STATE, {type, payload}) => {
 			};
 	}
 };
+
+export default core;
