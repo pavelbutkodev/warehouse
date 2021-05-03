@@ -1,9 +1,9 @@
 import {
-  LOGIN_USER,
+  ADD_PROD,
 } from '../../constants/actionTypes';
 
 
-export const loginUser = (user) => ({
-  type: LOGIN_USER,
-  payload: { ...user },
+export const addProd = (payload) => ({
+  type: ADD_PROD,
+  payload: payload,
 });

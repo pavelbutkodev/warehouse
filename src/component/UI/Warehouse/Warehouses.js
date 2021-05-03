@@ -4,11 +4,14 @@ import {useSelector} from "react-redux";
 import {getUnallocatedProducts, getWorkWarehouses} from "../../../store/core/selector";
 import arrowRight from "../../../assets/img/arrowRight.svg";
 import arrowLeft from "../../../assets/img/arrowLeft.svg";
+import Modal from "../Modal";
 
 const Warehouses = () => {
 	const [warehouseCount, setWarehouseCount] = useState(0);
 	const warehouses = useSelector(getWorkWarehouses);
 	const unallocatedProducts = useSelector(getUnallocatedProducts);
+	const [currentProd, setCurrentProd] = useState(null);
+	const [onModal, setOnModal] = useState(false);
 
 	const arrowSet = (symbol) => {
 		if (symbol === '+') {
@@ -26,20 +29,51 @@ const Warehouses = () => {
 		}
 	}
 
+	const dragStartHandler = (e, item) => {
+		setCurrentProd(item)
+	}
+
+	const dragEndHandler = (e) => {
+		e.target.style.background = 'white';
+	}
+
+	function dragOverHandler(e) {
+		e.preventDefault()
+		e.target.style.background = 'lightgray';
+	}
+
+	const dropHandler = (e, item) => {
+		e.preventDefault()
+		e.target.style.background = 'white';
+		if (item === warehouses[warehouseCount] && currentProd !== item) {
+			setOnModal(true)
+		}
+	}
+
 	return (
 		<div className={styles.warehousesPage}>
 			<div className={styles.wareInfo}>
-				<div className={styles.thisProd}>
+				<div
+					draggable={true}
+					onDragStart={(e) => dragStartHandler(e, warehouses[warehouseCount])}
+					onDragLeave={(e) => dragEndHandler(e)}
+					onDragEnd={(e) => dragEndHandler(e)}
+					onDragOver={(e) => dragOverHandler(e)}
+					onDrop={(e) => dropHandler(e, warehouses[warehouseCount])}
+					className={styles.thisProd}>
 					<p>Продукты:</p>
+					{console.log('======>warehouses', warehouses[warehouseCount])}
 					{warehouses[warehouseCount].products.map(({name, count}) => (
-							<p className={styles.prodName}>{name}, {count}</p>
+						<p className={styles.prodName}>
+							{name}, {count}
+						</p>
 					))}
 				</div>
 				<div className={styles.thisWare}>
-						<p>Название склада:</p>
-						<div className={styles.wareName}>
-							{warehouses[warehouseCount].name}
-						</div>
+					<p>Название склада:</p>
+					<div className={styles.wareName}>
+						{warehouses[warehouseCount].name}
+					</div>
 					<img
 						className={styles.arrowRight}
 						src={arrowRight}
@@ -61,13 +95,22 @@ const Warehouses = () => {
 			<div className={styles.unallocatedWrapper}>
 				<div className={styles.unallocatedProd}>
 					<p>Нераспределенные продукты:</p>
-					{unallocatedProducts.map(({id, name, warehouse, count}) => (
-						<div draggable={true} className={styles.productInfo}>
-							<p>{name}, {count}</p>
+					{unallocatedProducts.map(item => (
+						<div
+							draggable={true}
+							onDragStart={(e) => dragStartHandler(e, item)}
+							onDragLeave={(e) => dragEndHandler(e)}
+							onDragEnd={(e) => dragEndHandler(e)}
+							onDragOver={(e) => dragOverHandler(e)}
+							onDrop={(e) => dropHandler(e, item)}
+							className={styles.productInfo}
+						>
+							{item.name}, {item.count}
 						</div>
 					))}
 				</div>
 			</div>
+			{onModal && <Modal onClose={setOnModal} currentProd={currentProd}/>}
 		</div>
 	)
 }

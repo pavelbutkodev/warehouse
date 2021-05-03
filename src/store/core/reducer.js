@@ -1,5 +1,5 @@
 import {
-	LOGIN_USER,
+	ADD_PROD,
 } from '../../constants/actionTypes';
 
 
@@ -38,9 +38,26 @@ const INITIAL_STATE = {
 
 const core = (state = INITIAL_STATE, {type, payload}) => {
 	switch (type) {
-		case LOGIN_USER:
+		case ADD_PROD:
+			const {form, currentProd} = payload;
 			return {
-				...state, warehouses: payload,
+				...state,
+				warehouses: state.warehouses.map((el) => {
+					if (el.id === 1) {
+						return ({
+							...el,
+							products: [
+								...el.products,
+								{
+									id: el.products.length,
+									name: currentProd.name,
+									warehouse: el.name,
+									count: form,
+								}]
+						})
+					}
+					return el
+				})
 			};
 		default:
 			return {
@@ -50,3 +67,14 @@ const core = (state = INITIAL_STATE, {type, payload}) => {
 };
 
 export default core;
+
+// warehouses: {
+// ...state.warehouses,
+// 		0: {
+// 	...state.warehouse[1],
+// 			products: {
+// 		...state.warehouse[1].products,
+// 				payload,
+// 		}
+// 	},
+// },
