@@ -1,9 +1,10 @@
 import React from "react";
-import styles from './styles.module.scss';
-import arrowRight from '../../assets/img/arrowRight.svg';
-import arrowLeft from '../../assets/img/arrowLeft.svg';
 
-const Info = (
+import styles from './styles.module.scss';
+import arrowRight from '../../../assets/img/arrowRight.svg';
+import arrowLeft from '../../../assets/img/arrowLeft.svg';
+
+const ChoiceWare = (
 	{
 		id,
 		name,
@@ -29,17 +30,17 @@ const Info = (
 					id ? arrowSet('-', 'products') : arrowSet('-', 'warehouses')
 				}}
 			/>
-			<h2>Name {id ? 'product' : 'warehouse'}: <span>{name}</span></h2>
+			<h2>{id ? 'Продукты' : 'Склад'}: <span>{name}</span></h2>
 			<div className={styles.infoContent}>
-				<div className={id ? `${styles.imgBlue} ${styles.infoImg}` : `${styles.infoImg} ${styles.imgPink}`}>
+				<div className={styles.infoImg}>
 					<img src={img} alt="img"/>
 				</div>
 				<div>
-					<p>{id ? 'Product quantity' : 'Number of products'}: <span>{count}</span></p>
+					<p>{id ? 'Количество продукта' : 'Продуктов на складе'}: <span>{count}</span></p>
 				</div>
 			</div>
 		</div>
 	)
 }
 
-export default Info;
+export default ChoiceWare;

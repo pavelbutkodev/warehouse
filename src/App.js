@@ -4,7 +4,7 @@ import {
 	Route,
 } from "react-router-dom";
 
-import Nav from "./component/Nav";
+import Nav from "./component/Shared/Nav";
 import {routes} from "./routes";
 
 import styles from './styles.module.scss';

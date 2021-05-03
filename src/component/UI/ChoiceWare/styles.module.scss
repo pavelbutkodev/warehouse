@@ -13,6 +13,11 @@
     right: 0;
     width: 30px;
     height: 30px;
+
+    &:hover {
+      transition: .5s;
+      transform: scale(1.2);
+    }
   }
 
   .arrowLeft {
@@ -21,6 +26,11 @@
     top: 0;
     width: 30px;
     height: 30px;
+
+    &:hover {
+      transition: .5s;
+      transform: scale(1.2);
+    }
   }
 
   h2 {
@@ -55,19 +65,12 @@
       display: flex;
       justify-content: center;
       align-items: center;
+      background: #EAEAEA;
 
       img {
         height: 120px;
         width: 120px;
       }
-    }
-
-    .imgPink {
-      background: linear-gradient(135.95deg, #FAA6A4 0%, #E87CC4 98.4%);
-    }
-
-    .imgBlue {
-      background: linear-gradient(135.95deg, #7BADFA 0%, #3D92F0 98.4%, #687EFF 98.4%);
     }
   }
 }

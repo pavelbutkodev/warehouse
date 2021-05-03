@@ -1,6 +1,6 @@
-import Main from "../component/Main";
-import Products from "../component/Products";
-import Warehouses from "../component/Warehouse";
+import Main from "../component/Shared/Main";
+import Products from "../component/UI/Products";
+import Warehouses from "../component/UI/Warehouse";
 
 export const routes = [
 	{
