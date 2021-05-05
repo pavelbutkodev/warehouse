@@ -4,8 +4,6 @@ import ChoiceWare from "../ChoiceWare";
 import LinkCategory from "../LinkCategory";
 
 import styles from './styles.module.scss';
-import warehouse from '../../../assets/img/warehouse.svg';
-import product from '../../../assets/img/product.svg';
 
 import {useSelector} from "react-redux";
 import {getUnallocatedProducts, getWarehouse} from "../../../store/core/selector";
@@ -13,14 +11,14 @@ import {getUnallocatedProducts, getWarehouse} from "../../../store/core/selector
 const category = [
 	{
 		id: 0,
-		img: warehouse,
+		img: '',
 		text: 'Склад',
 		desc: 'Перейти на страницу со всеми складами',
 		path: '/warehouses',
 	},
 	{
 		id: 1,
-		img: product,
+		img: '',
 		text: 'Продукты',
 		desc: 'Перейти на страницу со всеми продуктами',
 		path: '/products',
@@ -73,14 +71,14 @@ const Content = () => {
 					name={warehouses[warehouseCount].name}
 					count={warehouses[warehouseCount].products.length}
 					arrowSet={arrowSet}
-					img={warehouse}
+					img={''}
 					id={0}
 				/>
 				<ChoiceWare
 					name={unallocatedProducts[productCount].name}
 					count={unallocatedProducts[productCount].count}
 					arrowSet={arrowSet}
-					img={product}
+					img={''}
 					id={1}
 				/>
 			</div>

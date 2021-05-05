@@ -2,8 +2,6 @@ import React, {useState} from "react";
 import styles from './styles.module.scss';
 import {useSelector} from "react-redux";
 import {getUnallocatedProducts, getWorkWarehouses} from "../../../store/core/selector";
-import arrowRight from "../../../assets/img/arrowRight.svg";
-import arrowLeft from "../../../assets/img/arrowLeft.svg";
 import Modal from "../Modal";
 
 const Warehouses = () => {
@@ -76,7 +74,7 @@ const Warehouses = () => {
 					</div>
 					<img
 						className={styles.arrowRight}
-						src={arrowRight}
+						src={''}
 						alt="arrowRight"
 						onClick={() => {
 							arrowSet('+')
@@ -84,7 +82,7 @@ const Warehouses = () => {
 					/>
 					<img
 						className={styles.arrowLeft}
-						src={arrowLeft}
+						src={''}
 						alt="arrowLeft"
 						onClick={() => {
 							arrowSet('-')

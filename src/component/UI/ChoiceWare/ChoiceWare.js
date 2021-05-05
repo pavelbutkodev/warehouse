@@ -1,8 +1,6 @@
 import React from "react";
 
 import styles from './styles.module.scss';
-import arrowRight from '../../../assets/img/arrowRight.svg';
-import arrowLeft from '../../../assets/img/arrowLeft.svg';
 
 const ChoiceWare = (
 	{
@@ -16,7 +14,7 @@ const ChoiceWare = (
 		<div className={styles.infoWrapper}>
 			<img
 				className={styles.arrowRight}
-				src={arrowRight}
+				src={''}
 				alt="arrowRight"
 				onClick={() => {
 					id ? arrowSet('+', 'products') : arrowSet('+', 'warehouses')
@@ -24,7 +22,7 @@ const ChoiceWare = (
 			/>
 			<img
 				className={styles.arrowLeft}
-				src={arrowLeft}
+				src={''}
 				alt="arrowLeft"
 				onClick={() => {
 					id ? arrowSet('-', 'products') : arrowSet('-', 'warehouses')
