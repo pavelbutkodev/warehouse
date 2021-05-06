@@ -3,6 +3,7 @@ import {
 	BrowserRouter as Router,
 	Switch,
 	Route,
+	Redirect,
 } from "react-router-dom";
 
 import Nav from "./component/Shared/Nav";
@@ -28,6 +29,7 @@ const App = () => {
 						))}
 					</Switch>
 				</div>
+				<Redirect from='/' to='/main/'/>
 			</Router>
 		</div>
 	)

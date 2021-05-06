@@ -1,6 +1,7 @@
 import React from "react";
 
 import styles from './styles.module.scss';
+import Button from "../Button";
 
 const Warehouses = () => {
 	const warehouses = [
@@ -12,21 +13,20 @@ const Warehouses = () => {
 
 	return (
 		<div className={styles.warehousesWrapper}>
-			<div>
-				<h2>Продукты</h2>
-				<button>
-					Добавить склад
-					<span>+</span>
-				</button>
+			<div className={styles.warehousesInfoPanel}>
+				<h2>Мои склады</h2>
+				<Button name='Добавить склад' type='add'/>
 			</div>
 			<div>
 				{warehouses.map(product => (
-					<div>
+					<div className={styles.productRow}>
 						<p className={styles.warehouseName}>
 							{product.name}
 						</p>
-						<button>Редактировать</button>
-						<button>Удалить</button>
+						<div className={styles.tableBtns}>
+							<Button name='Редактировать' type='simple'/>
+							<Button name='Удалить' type='simple'/>
+						</div>
 					</div>
 				))}
 			</div>

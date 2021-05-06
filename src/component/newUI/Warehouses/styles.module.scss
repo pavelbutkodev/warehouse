@@ -1,3 +1,32 @@
 .warehousesWrapper {
   height: calc(100vh - 88px);
+  width: 100%;
+
+  .warehousesInfoPanel {
+    display: flex;
+    justify-content: space-between;
+    padding: 48px 35px;
+
+    h2 {
+      font-weight: 600;
+      font-size: 36px;
+      line-height: 32px;
+      color: #363636;
+    }
+  }
+
+  .productRow {
+    display: flex;
+    justify-content: space-between;
+    max-width: 1268px;
+    width: 100%;
+    height: 78px;
+    background: #FFFFFF;
+    box-shadow: 0 12px 12px -8px rgba(97, 97, 97, 0.04);
+    border-radius: 10px;
+
+    .tableBtns {
+
+    }
+  }
 }
