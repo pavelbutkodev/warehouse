@@ -22,14 +22,15 @@ const App = () => {
 					<Switch>
 						{routes.map((route, index) => (
 							<Route
+								exact={route.exact}
 								key={index}
 								path={route.path}
 								component={route.component}
 							/>
 						))}
+						<Redirect from='/' to='/main/'/>
 					</Switch>
 				</div>
-				<Redirect from='/' to='/main/'/>
 			</Router>
 		</div>
 	)
