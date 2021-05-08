@@ -1,5 +1,7 @@
 import React from "react";
 
+import Button from "../Button";
+
 import styles from './styles.module.scss';
 
 const Warehouse = () => {
@@ -12,26 +14,27 @@ const Warehouse = () => {
 
 	return (
 		<div className={styles.warehouseWrapper}>
-			<div>
+			<div className={styles.productsInfoPanel}>
 				<h2>Склад...</h2>
-				<button>Переместить товары</button>
-				<button>
-					Добавить склад
-					<span>+</span>
-				</button>
+				<div className={styles.btnPanel}>
+					<Button name='Переместить товары' type='move'/>
+					<Button name='Добавить товар' type='add'/>
+				</div>
 			</div>
 			<div>
 				{productsThisWarehouse.map(product => (
-					<div>
-						<p className={styles.productName}>
+					<div className={styles.productRow}>
+						<p className={styles.warehouseName}>
 							{product.name}
 						</p>
-						<p className={styles.productCount}>
-							<button>-</button>
-							{product.count}
-							<button>+</button>
-						</p>
-						<button>Удалить</button>
+						<div className={styles.tableBtns}>
+							<p>
+								<span>-</span>
+								{product.count} шт.
+								<span>+</span>
+							</p>
+							<Button name='Удалить' type='simple'/>
+						</div>
 					</div>
 				))}
 			</div>

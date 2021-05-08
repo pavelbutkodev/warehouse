@@ -1,27 +1,36 @@
-import React from "react";
-import {Link} from "react-router-dom";
+import React, {useState} from "react";
+import {NavLink} from "react-router-dom";
 
 import styles from './styles.module.scss';
 import sidebarMain from '../../../assets/img/sidebarMain.svg';
 import sidebarWarehouse from '../../../assets/img/sidebarWarehouse.svg';
 import sidebarProduct from '../../../assets/img/sidebarProduct.svg';
+import sidebarWarehousesActive from '../../../assets/img/sidebarWarehousesActive.svg';
+import sidebarProductActive from '../../../assets/img/sidebarProductActive.svg';
+import sidebarMainActive from '../../../assets/img/sidebarMainActive.svg';
+
+const links = [
+	{src: sidebarMain, activeSrc: sidebarMainActive, to: '/main/', text: 'Главная'},
+	{src: sidebarWarehouse, activeSrc: sidebarWarehousesActive, to: '/warehouses/', text: 'Склады'},
+	{src: sidebarProduct, activeSrc: sidebarProductActive, to: '/products/', text: 'Продукты'},
+	{src: sidebarProduct, activeSrc: sidebarProductActive, to: '/warehouse/', text: 'Склад'},
+	{src: sidebarProduct, activeSrc: sidebarProductActive, to: '/move/', text: 'Переместить'},
+]
 
 const Sidebar = () => {
+	const [active, setActive] = useState('')
+
 	return (
 		<div className={styles.sidebarWrapper}>
 			<ul>
-				<li>
-					<img src={sidebarMain} alt="img"/>
-					<Link to='/main/'>Главная</Link>
-				</li>
-				<li>
-					<img src={sidebarWarehouse} alt="img"/>
-					<Link to='/warehouses/'>Склады</Link>
-				</li>
-				<li>
-					<img src={sidebarProduct} alt="img"/>
-					<Link to='/products/'>Продукты</Link>
-				</li>
+				{links.map(({src, to, text, activeSrc}) => (
+					<li>
+						<NavLink onClick={() => setActive(text)} activeClassName={styles.activeNav} to={to}>
+							<img src={active === text ? activeSrc : src} alt="img"/>
+							{text}
+						</NavLink>
+					</li>
+				))}
 			</ul>
 		</div>
 	)

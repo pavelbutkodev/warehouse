@@ -1,5 +1,10 @@
 import {
 	ADD_PROD,
+	CHANGE_PROD,
+	REMOVE_PROD,
+	ADD_WAREHOUSE,
+	CHANGE_WAREHOUSE,
+	REMOVE_WAREHOUSE,
 } from '../../constants/actionTypes';
 
 
@@ -7,58 +12,53 @@ const INITIAL_STATE = {
 	warehouses: [
 		{
 			id: 0,
-			name: 'Нераспределенные',
-			products: [
-				{id: 0, name: 'Молоко', warehouse: 'Нераспределенные', count: 3},
-				{id: 1, name: 'Кофе', warehouse: 'Нераспределенные', count: 2},
-				{id: 2, name: 'Сыр', warehouse: 'Нераспределенные', count: 2},
-				{id: 3, name: 'Чай', warehouse: 'Нераспределенные', count: 2},
-				{id: 4, name: 'Шоколад', warehouse: 'Нераспределенные', count: 2},
-				{id: 5, name: 'Хлеб', warehouse: 'Нераспределенные', count: 2},
-				{id: 6, name: 'Печенье', warehouse: 'Нераспределенные', count: 2},
-				{id: 7, name: 'Кефир', warehouse: 'Нераспределенные', count: 2},
-			]
+			name: 'Склад 1',
+			products: [],
 		},
 		{
 			id: 1,
 			name: 'Первый склад',
-			products: [
-				{id: 0, name: 'Какао', warehouse: 'Первый склад', count: 3},
-			]
+			products: [],
 		},
 		{
 			id: 2,
 			name: 'Второй склад',
-			products: [
-				{id: 0, name: 'Киви', warehouse: 'Второй склад', count: 3},
-			]
+			products: [],
 		},
 	],
+	products: [
+		{id: 0, name: 'Молоко', count: 3},
+		{id: 1, name: 'Кофе', count: 2},
+		{id: 2, name: 'Сыр', count: 2},
+		{id: 3, name: 'Чай', count: 2},
+		{id: 4, name: 'Шоколад', count: 2},
+		{id: 5, name: 'Хлеб', count: 2},
+		{id: 6, name: 'Печенье', count: 2},
+		{id: 7, name: 'Кефир', count: 2},
+	]
 };
 
 const core = (state = INITIAL_STATE, {type, payload}) => {
 	switch (type) {
 		case ADD_PROD:
-			const {form, currentProd} = payload;
-			return {
-				...state,
-				warehouses: state.warehouses.map((el) => {
-					if (el.id === 1) {
-						return ({
-							...el,
-							products: [
-								...el.products,
-								{
-									id: el.products.length,
-									name: currentProd.name,
-									warehouse: el.name,
-									count: form,
-								}]
-						})
+			return {...state, products: [...state.products, payload]}
+		case CHANGE_PROD:
+			return {...state}
+		case REMOVE_PROD:
+			return ({...state, products: state.products.filter(el => el.id !== payload)})
+		case ADD_WAREHOUSE:
+			return ({...state, warehouses: [...state.warehouses, payload]})
+		case CHANGE_WAREHOUSE:
+			return ({
+				...state, warehouses: state.warehouses.map(el => {
+					if (el.id === payload.id) {
+						return ({...el, name: payload.name})
 					}
 					return el
 				})
-			};
+			})
+		case REMOVE_WAREHOUSE:
+			return ({...state, warehouses: state.warehouses.filter(el => el.id !== payload)})
 		default:
 			return {
 				...state,
@@ -68,13 +68,23 @@ const core = (state = INITIAL_STATE, {type, payload}) => {
 
 export default core;
 
-// warehouses: {
-// ...state.warehouses,
-// 		0: {
-// 	...state.warehouse[1],
-// 			products: {
-// 		...state.warehouse[1].products,
-// 				payload,
+// const {form, currentProd} = payload;
+// return {
+// 	...state,
+// 	warehouses: state.warehouses.map((el) => {
+// 		if (el.id === 1) {
+// 			return ({
+// 				...el,
+// 				products: [
+// 					...el.products,
+// 					{
+// 						id: el.products.length,
+// 						name: currentProd.name,
+// 						warehouse: el.name,
+// 						count: form,
+// 					}]
+// 			})
 // 		}
-// 	},
-// },
+// 		return el
+// 	})
+// };

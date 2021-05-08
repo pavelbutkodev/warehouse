@@ -1,37 +1,74 @@
-import React from "react";
+import React, {useState} from "react";
+import {useSelector} from "react-redux";
+
+import {getProducts} from "../../../store/core/selector";
+import Button from "../Button";
+import ModalProduct from "../ModalProduct";
 
 import styles from './styles.module.scss';
 
 const Products = () => {
-	const products = [
-		{name: 'Молоко', count: 2},
-		{name: 'Молоко', count: 2},
-		{name: 'Молоко', count: 2},
-		{name: 'Молоко', count: 2},
-	]
+	const [openModalAdd, setOpenModalAdd] = useState(false);
+	const [openModalRemove, setOpenModalRemove] = useState({status: false, id: null});
+	const products = useSelector(getProducts);
+
+	const handleAddWarehouse = () => {
+		setOpenModalAdd(!openModalAdd);
+	}
+
+	const handleRemoveWarehouse = (id) => {
+		setOpenModalRemove({
+			id: id,
+			status: !openModalRemove.status,
+		});
+	}
+
+	const closeRemoveWarehouse = () => {
+		setOpenModalRemove({
+			id: openModalRemove.id,
+			status: !openModalRemove.status,
+		});
+	}
 
 	return (
 		<div className={styles.productsWrapper}>
-			<div>
+			<div className={styles.productsInfoPanel}>
 				<h2>Продукты</h2>
-				<button>
-					Добавить товар
-					<span>+</span>
-				</button>
+				<Button
+					onClick={handleAddWarehouse}
+					name='Добавить товар'
+					type='add'
+				/>
 			</div>
 			<div>
 				{products.map(product => (
-					<div>
-						<p className={styles.productName}>{product.name}</p>
-						<p className={styles.productCount}>
-							<button>-</button>
-							{product.count}
-							<button>+</button>
+					<div className={styles.productRow}>
+						<p className={styles.warehouseName}>
+							{product.name}
 						</p>
-						<button>Удалить</button>
+						<div className={styles.tableBtns}>
+							<p>
+								<span>-</span>
+								{product.count} шт.
+								<span>+</span>
+							</p>
+							<Button
+								onClick={() => handleRemoveWarehouse(product.id)}
+								name='Удалить'
+								type='simple'
+							/>
+						</div>
 					</div>
 				))}
 			</div>
+			{openModalAdd && <ModalProduct type='add' text='Добавить товар' onClose={setOpenModalAdd}/>}
+			{openModalRemove.status &&
+			<ModalProduct
+				id={openModalRemove.id}
+				type='remove'
+				text='Удалить товар'
+				onClose={closeRemoveWarehouse}
+			/>}
 		</div>
 	)
 }
