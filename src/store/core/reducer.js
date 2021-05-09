@@ -12,25 +12,14 @@ const INITIAL_STATE = {
 	warehouses: [
 		{
 			id: 0,
-			name: 'Склад 1',
-			products: [],
-		},
-		{
-			id: 1,
-			name: 'Первый склад',
-			products: [],
-		},
-		{
-			id: 2,
 			name: 'Второй склад',
 			products: [
-				{id: 0, name: 'Молоко', count: 3},
+				{id: Date.now(), name: 'Молоко', count: 3},
 			],
 		},
 	],
 	products: [
-		{id: 0, name: 'Молоко', count: 3},
-		{id: 1, name: 'Кофе', count: 2},
+		{id: 0, name: 'Какао', count: 3},
 	]
 };
 
@@ -39,7 +28,15 @@ const core = (state = INITIAL_STATE, {type, payload}) => {
 		case ADD_PROD:
 			return {...state, products: [...state.products, payload]}
 		case CHANGE_PROD:
-			return {...state}
+			return ({...state, products: state.products.map(el => {
+					if (el.id === payload.id) {
+						return ({
+							...el,
+							count: el.count - +payload.count,
+						})
+					}
+					return el
+				})})
 		case REMOVE_PROD:
 			return ({...state, products: state.products.filter(el => el.id !== payload)})
 		case ADD_WAREHOUSE:

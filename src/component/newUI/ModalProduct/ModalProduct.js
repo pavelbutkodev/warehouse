@@ -2,19 +2,19 @@ import React, {useRef, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 
 import {getProducts} from "../../../store/core/selector";
-import {addProd, removeProd} from "../../../store/core/actions";
+import {addProd, changeProd, removeProd} from "../../../store/core/actions";
 import Button from "../Button";
 
 import styles from './styles.module.scss';
 
-const ModalProduct = ({onClose, text, type, id}) => {
+const ModalProduct = ({onClose, text, type, id, count}) => {
 	const products = useSelector(getProducts);
 	const dispatch = useDispatch();
 	const [form, setForm] = useState({
 		name: '',
-		count: ''
+		count: '',
 	})
-	const [radio, setRadio] = useState('')
+	const [radio, setRadio] = useState('first')
 
 	const inputEl = useRef(null);
 
@@ -25,8 +25,13 @@ const ModalProduct = ({onClose, text, type, id}) => {
 			dispatch(addProd({id: products.length, name: form.name, count: form.count},))
 			onClose();
 		} else if (type === 'remove') {
-			dispatch(removeProd(id))
-			onClose();
+			if (radio === 'first') {
+				dispatch(removeProd(id))
+				onClose();
+			} else {
+				dispatch(changeProd({id, count: form.count}))
+				onClose();
+			}
 		}
 	}
 
@@ -77,7 +82,7 @@ const ModalProduct = ({onClose, text, type, id}) => {
 								<input
 									type="radio"
 									id="2"
-									value="phone"
+									value='email'
 									checked={radio === 'second'}
 									onClick={() => setRadio('second')}
 								/>
@@ -87,9 +92,16 @@ const ModalProduct = ({onClose, text, type, id}) => {
 						<div style={radio === 'first' ? {opacity: .3} : {}} className={styles.infoPanel}>
 							<p>Какое количество вы хотите удалить?</p>
 							<div>
-								<input disabled={radio === 'first'} type="text"/>
-								/
-								<input disabled={radio === 'first'} type="text"/>
+								<input
+									placeholder='0'
+									maxLength={2}
+									disabled={radio === 'first'}
+									type="text"
+									onChange={(e) => handleChange(e, 'count')}
+									value={form.count}
+								/>
+								<span>/</span>
+								<p>{count}</p>
 							</div>
 						</div>
 						<div className={styles.buttonPanel}>

@@ -1,24 +1,23 @@
 import React, {useState} from "react";
 import {useSelector} from "react-redux";
-
 import {getProducts} from "../../../store/core/selector";
 import Button from "../Button";
 import ModalProduct from "../ModalProduct";
-
 import styles from './styles.module.scss';
 
 const Products = () => {
 	const [openModalAdd, setOpenModalAdd] = useState(false);
-	const [openModalRemove, setOpenModalRemove] = useState({status: false, id: null});
+	const [openModalRemove, setOpenModalRemove] = useState({status: false, id: null, count: null});
 	const products = useSelector(getProducts);
 
 	const handleAddWarehouse = () => {
 		setOpenModalAdd(!openModalAdd);
 	}
 
-	const handleRemoveWarehouse = (id) => {
+	const handleRemoveWarehouse = (id, count) => {
 		setOpenModalRemove({
 			id: id,
+			count: count,
 			status: !openModalRemove.status,
 		});
 	}
@@ -26,6 +25,7 @@ const Products = () => {
 	const closeRemoveWarehouse = () => {
 		setOpenModalRemove({
 			id: openModalRemove.id,
+			count: openModalRemove.count,
 			status: !openModalRemove.status,
 		});
 	}
@@ -51,7 +51,7 @@ const Products = () => {
 								{product.count} шт.
 							</p>
 							<Button
-								onClick={() => handleRemoveWarehouse(product.id)}
+								onClick={() => handleRemoveWarehouse(product.id, product.count)}
 								name='Удалить'
 								type='simple'
 							/>
@@ -63,6 +63,7 @@ const Products = () => {
 			{openModalRemove.status &&
 			<ModalProduct
 				id={openModalRemove.id}
+				count={openModalRemove.count}
 				type='remove'
 				text='Удалить товар'
 				onClose={closeRemoveWarehouse}
