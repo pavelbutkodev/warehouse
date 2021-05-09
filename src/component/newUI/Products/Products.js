@@ -48,9 +48,7 @@ const Products = () => {
 						</p>
 						<div className={styles.tableBtns}>
 							<p>
-								<span>-</span>
 								{product.count} шт.
-								<span>+</span>
 							</p>
 							<Button
 								onClick={() => handleRemoveWarehouse(product.id)}

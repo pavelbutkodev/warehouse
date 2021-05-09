@@ -79,4 +79,13 @@
       }
     }
   }
+
+  .listEmpty {
+    display: flex;
+    justify-content: space-between;
+    padding: 48px 0;
+    max-width: 1268px;
+    margin: 0 auto;
+    font-size: 34px;
+  }
 }

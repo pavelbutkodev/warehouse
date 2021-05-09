@@ -1,10 +1,9 @@
 import React from "react";
-
-import Warehouses from "../../UI/Warehouse";
+import Content from "../../UI/Content";
 
 const Main = () => {
 	return (
-		<Warehouses/>
+		<Content />
 	)
 }
 

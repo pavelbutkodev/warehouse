@@ -19,7 +19,7 @@ const ModalWarehouse = ({onClose, text, type, id}) => {
 
 	const handleClick = () => {
 		if (type === 'add') {
-			dispatch(addWarehouse({id: getWarehouses.length, name: form, product: []}))
+			dispatch(addWarehouse({id: getWarehouses.length, name: form, products: []}))
 			onClose();
 		} else if (type === 'change') {
 			dispatch(changeWarehouse({id: id, name: form}))

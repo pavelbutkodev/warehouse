@@ -13,7 +13,6 @@ const links = [
 	{src: sidebarMain, activeSrc: sidebarMainActive, to: '/main/', text: 'Главная'},
 	{src: sidebarWarehouse, activeSrc: sidebarWarehousesActive, to: '/warehouses/', text: 'Склады'},
 	{src: sidebarProduct, activeSrc: sidebarProductActive, to: '/products/', text: 'Продукты'},
-	{src: sidebarProduct, activeSrc: sidebarProductActive, to: '/warehouse/', text: 'Склад'},
 	{src: sidebarProduct, activeSrc: sidebarProductActive, to: '/move/', text: 'Переместить'},
 ]
 

@@ -4,8 +4,9 @@ import {useSelector} from "react-redux";
 import Modal from "../Modal";
 
 import styles from './styles.module.scss';
+import {NavLink} from "react-router-dom";
 
-const Warehouses = () => {
+const Content = () => {
 	// const [warehouseCount, setWarehouseCount] = useState(0);
 	// const [currentProd, setCurrentProd] = useState(null);
 	// const [onModal, setOnModal] = useState(false);
@@ -112,4 +113,4 @@ const Warehouses = () => {
 	)
 }
 
-export default Warehouses;
+export default Content;

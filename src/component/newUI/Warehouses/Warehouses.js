@@ -6,6 +6,7 @@ import ModalWarehouse from "../ModalWarehouse";
 import Button from "../Button";
 
 import styles from './styles.module.scss';
+import {NavLink} from "react-router-dom";
 
 
 const Warehouses = () => {
@@ -60,7 +61,7 @@ const Warehouses = () => {
 				{warehouses.map(warehouse => (
 					<div className={styles.productRow}>
 						<p className={styles.warehouseName}>
-							{warehouse.name}
+							<NavLink to={`/warehouse/${warehouse.id}/`}>{warehouse.name}</NavLink>
 						</p>
 						<div className={styles.tableBtns}>
 							<Button

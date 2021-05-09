@@ -21,7 +21,7 @@ export const routes = [
 		exact: true,
 	},
 	{
-		path: '/warehouse/',
+		path: '/warehouse/:id/',
 		component: Warehouse,
 		exact: true,
 	},

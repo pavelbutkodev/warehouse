@@ -23,18 +23,14 @@ const INITIAL_STATE = {
 		{
 			id: 2,
 			name: 'Второй склад',
-			products: [],
+			products: [
+				{id: 0, name: 'Молоко', count: 3},
+			],
 		},
 	],
 	products: [
 		{id: 0, name: 'Молоко', count: 3},
 		{id: 1, name: 'Кофе', count: 2},
-		{id: 2, name: 'Сыр', count: 2},
-		{id: 3, name: 'Чай', count: 2},
-		{id: 4, name: 'Шоколад', count: 2},
-		{id: 5, name: 'Хлеб', count: 2},
-		{id: 6, name: 'Печенье', count: 2},
-		{id: 7, name: 'Кефир', count: 2},
 	]
 };
 
