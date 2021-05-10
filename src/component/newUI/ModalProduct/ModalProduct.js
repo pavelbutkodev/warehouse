@@ -7,7 +7,7 @@ import Button from "../Button";
 
 import styles from './styles.module.scss';
 
-const ModalProduct = ({onClose, text, type, id, count}) => {
+const ModalProduct = ({onClose, text, type, id, count, name}) => {
 	const products = useSelector(getProducts);
 	const dispatch = useDispatch();
 	const [form, setForm] = useState({
@@ -22,14 +22,14 @@ const ModalProduct = ({onClose, text, type, id, count}) => {
 
 	const handleClick = () => {
 		if (type === 'add') {
-			dispatch(addProd({id: products.length, name: form.name, count: form.count},))
+			dispatch(addProd({id: products.length, name: form.name, count: form.count}))
 			onClose();
 		} else if (type === 'remove') {
 			if (radio === 'first') {
-				dispatch(removeProd(id))
+				dispatch(removeProd(name))
 				onClose();
 			} else {
-				dispatch(changeProd({id, count: form.count}))
+				dispatch(changeProd({name, count: form.count}))
 				onClose();
 			}
 		}

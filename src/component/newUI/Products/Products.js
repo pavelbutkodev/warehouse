@@ -7,17 +7,18 @@ import styles from './styles.module.scss';
 
 const Products = () => {
 	const [openModalAdd, setOpenModalAdd] = useState(false);
-	const [openModalRemove, setOpenModalRemove] = useState({status: false, id: null, count: null});
+	const [openModalRemove, setOpenModalRemove] = useState({status: false, id: null, count: null, name: ''});
 	const products = useSelector(getProducts);
 
-	const handleAddWarehouse = () => {
+	const handleAddProduct = () => {
 		setOpenModalAdd(!openModalAdd);
 	}
 
-	const handleRemoveWarehouse = (id, count) => {
+	const handleRemoveWarehouse = (id, count, name) => {
 		setOpenModalRemove({
 			id: id,
 			count: count,
+			name: name,
 			status: !openModalRemove.status,
 		});
 	}
@@ -26,6 +27,7 @@ const Products = () => {
 		setOpenModalRemove({
 			id: openModalRemove.id,
 			count: openModalRemove.count,
+			name: openModalRemove.name,
 			status: !openModalRemove.status,
 		});
 	}
@@ -35,7 +37,7 @@ const Products = () => {
 			<div className={styles.productsInfoPanel}>
 				<h2>Продукты</h2>
 				<Button
-					onClick={handleAddWarehouse}
+					onClick={handleAddProduct}
 					name='Добавить товар'
 					type='add'
 				/>
@@ -51,7 +53,7 @@ const Products = () => {
 								{product.count} шт.
 							</p>
 							<Button
-								onClick={() => handleRemoveWarehouse(product.id, product.count)}
+								onClick={() => handleRemoveWarehouse(product.id, product.count, product.name)}
 								name='Удалить'
 								type='simple'
 							/>
@@ -64,6 +66,7 @@ const Products = () => {
 			<ModalProduct
 				id={openModalRemove.id}
 				count={openModalRemove.count}
+				name={openModalRemove.name}
 				type='remove'
 				text='Удалить товар'
 				onClose={closeRemoveWarehouse}

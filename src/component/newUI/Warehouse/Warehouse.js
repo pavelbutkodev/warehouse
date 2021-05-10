@@ -1,42 +1,97 @@
-import React from "react";
-
+import React, {useState} from "react";
 import Button from "../Button";
-
 import styles from './styles.module.scss';
 import {useParams} from "react-router-dom";
 import {useSelector} from "react-redux";
 import {getWarehouse} from "../../../store/core/selector";
+import ModalWarehouse from "../ModalWarehouse";
 
 const Warehouse = () => {
 	const {id} = useParams()
 	const warehouse = useSelector(getWarehouse).filter(el => el.id === +id)[0]
+	const [openModalAdd, setOpenModalAdd] = useState(false);
+	const [openModalRemove, setOpenModalRemove] = useState({status: false, id: null, count: null, name: ''});
+
+	const handleAddProduct = () => {
+		setOpenModalAdd(!openModalAdd);
+	}
+
+	const handleRemoveWarehouse = (id, count, name) => {
+		setOpenModalRemove({
+			id: id,
+			count: count,
+			name: name,
+			status: !openModalRemove.status,
+		});
+	}
+
+	const closeRemoveWarehouse = () => {
+		setOpenModalRemove({
+			id: openModalRemove.id,
+			count: openModalRemove.count,
+			name: openModalRemove.name,
+			status: !openModalRemove.status,
+		});
+	}
 
 	return (
-		<div className={styles.warehouseWrapper}>
-			<div className={styles.productsInfoPanel}>
-				<h2>{warehouse.name}</h2>
-				<div className={styles.btnPanel}>
-					<Button name='Переместить товары' type='move'/>
-					<Button name='Добавить товар' type='add'/>
+		<>
+			{warehouse
+				?
+				<div className={styles.warehouseWrapper}>
+					<div className={styles.productsInfoPanel}>
+						<h2>{warehouse.name}</h2>
+						<div className={styles.btnPanel}>
+							<Button
+								name='Переместить товары'
+								type='move'
+							/>
+							<Button
+								onClick={handleAddProduct}
+								name='Добавить товар'
+								type='add'
+							/>
+						</div>
+					</div>
+					<div>
+						{warehouse?.products.length > 0
+							? warehouse.products.map(({id, name, count}) =>
+								<div className={styles.productRow}>
+									<p className={styles.warehouseName}>
+										{name}
+									</p>
+									<div className={styles.tableBtns}>
+										<p>
+											{count} шт.
+										</p>
+										<Button
+											onClick={() => handleRemoveWarehouse(id, count, name)}
+											name='Удалить'
+											type='simple'
+										/>
+									</div>
+								</div>)
+							: <div className={styles.listEmpty}>Список пуст ...</div>}
+					</div>
+					{openModalAdd && <ModalWarehouse type='add' text='Добавить товар' onClose={setOpenModalAdd}/>}
+					{openModalRemove.status &&
+					<ModalWarehouse
+						prodId={openModalRemove.id}
+						prodCount={openModalRemove.count}
+						prodName={openModalRemove.name}
+						warehouseName={warehouse.name}
+						type='remove'
+						text='Удалить товар'
+						onClose={closeRemoveWarehouse}
+					/>}
 				</div>
-			</div>
-			<div>
-				{warehouse.products.length > 0
-					? warehouse.products.map(({name, count}) =>
-						<div className={styles.productRow}>
-							<p className={styles.warehouseName}>
-								{name}
-							</p>
-							<div className={styles.tableBtns}>
-								<p>
-									{count} шт.
-								</p>
-								<Button name='Удалить' type='simple'/>
-							</div>
-						</div>)
-					: <div className={styles.listEmpty}>Список пуст ...</div>}
-			</div>
-		</div>
+				:
+				<div className={styles.warehouseWrapper}>
+					<div className={styles.productsInfoPanel}>
+						<h2>Такого склада не существует</h2>
+					</div>
+				</div>}
+		</>
 	)
 }
 

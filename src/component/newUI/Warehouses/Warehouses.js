@@ -2,7 +2,7 @@ import React, {useState} from "react";
 import {useSelector} from "react-redux";
 
 import {getWarehouse} from "../../../store/core/selector";
-import ModalWarehouse from "../ModalWarehouse";
+import ModalWarehouses from "../ModalWarehouses";
 import Button from "../Button";
 
 import styles from './styles.module.scss';
@@ -78,16 +78,16 @@ const Warehouses = () => {
 					</div>
 				))}
 			</div>
-			{openModalAdd && <ModalWarehouse type='add' text='Добавить склад' onClose={setOpenModalAdd}/>}
+			{openModalAdd && <ModalWarehouses type='add' text='Добавить склад' onClose={setOpenModalAdd}/>}
 			{openModalChange.status &&
-			<ModalWarehouse
+			<ModalWarehouses
 				id={openModalChange.id}
 				type='change'
 				text='Изменить склад'
 				onClose={closeChangeWarehouse}
 			/>}
 			{openModalRemove.status &&
-			<ModalWarehouse
+			<ModalWarehouses
 				id={openModalRemove.id}
 				type='remove'
 				text='Удалить склад'
