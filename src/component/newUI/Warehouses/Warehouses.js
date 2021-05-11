@@ -1,10 +1,8 @@
 import React, {useState} from "react";
 import {useSelector} from "react-redux";
-
 import {getWarehouse} from "../../../store/core/selector";
 import ModalWarehouses from "../ModalWarehouses";
 import Button from "../Button";
-
 import styles from './styles.module.scss';
 import {NavLink} from "react-router-dom";
 

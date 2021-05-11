@@ -14,16 +14,16 @@ import {
 const INITIAL_STATE = {
 	warehouses: [
 		{
-			id: 0,
+			id: Date.now(),
 			name: 'Второй склад',
 			products: [
-				{id: 0, name: 'Молоко', count: 3},
+				{name: 'Молоко', count: 3},
 			],
 		},
 	],
 	products: [
-		{id: 0, name: 'Какао', count: 3},
-		{id: 1, name: 'Молоко', count: 1},
+		{name: 'Какао', count: 3},
+		{name: 'Молоко', count: 1},
 	]
 };
 
@@ -46,10 +46,7 @@ const core = (state = INITIAL_STATE, {type, payload}) => {
 		case REMOVE_PROD:
 			return ({...state, products: state.products.filter(el => el.name !== payload)})
 		case WAREHOUSE_FROM_GENERAL:
-			let isSimilarWare = false;
-			state.products.forEach(el => {
-				isSimilarWare = el.name === payload.prodName;
-			});
+			let isSimilarWare = state.products.filter(el => el.name === payload.prodName).length > 0
 
 			if (isSimilarWare) {
 				return ({
@@ -101,8 +98,7 @@ const core = (state = INITIAL_STATE, {type, payload}) => {
 				})
 			})
 		case WAREHOUSES_FROM_GENERAL:
-			const prod = state.warehouses[payload].products;
-
+			const prod = state.warehouses.filter(el => el.id === payload)[0].products
 			let isSimilarWares = false;
 			state.products.forEach(el => {
 				prod.forEach(prod => {

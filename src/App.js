@@ -28,7 +28,7 @@ const App = () => {
 								component={route.component}
 							/>
 						))}
-						<Redirect from='/' to='/main/'/>
+						<Redirect from='/' to='/warehouses/'/>
 					</Switch>
 				</div>
 			</Router>

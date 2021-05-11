@@ -1,14 +1,11 @@
 import React, {useRef, useState} from "react";
-import {useDispatch, useSelector} from "react-redux";
-
-import {getWarehouse} from "../../../store/core/selector";
+import {useDispatch} from "react-redux";
 import {addWarehouse, changeWarehouse, removeWarehouse, warehousesFromGeneral} from "../../../store/core/actions";
 import Button from "../Button";
 
 import styles from './styles.module.scss';
 
 const ModalWarehouses = ({onClose, text, type, id}) => {
-	const getWarehouses = useSelector(getWarehouse);
 	const dispatch = useDispatch();
 	const [form, setForm] = useState('')
 	const inputEl = useRef(null);
@@ -19,7 +16,7 @@ const ModalWarehouses = ({onClose, text, type, id}) => {
 
 	const handleClick = () => {
 		if (type === 'add') {
-			dispatch(addWarehouse({id: getWarehouses.length, name: form, products: []}))
+			dispatch(addWarehouse({id: Date.now(), name: form, products: []}))
 			onClose();
 		} else if (type === 'change') {
 			dispatch(changeWarehouse({id: id, name: form}))

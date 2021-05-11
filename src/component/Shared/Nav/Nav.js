@@ -5,7 +5,7 @@ import {Link} from "react-router-dom";
 const Nav = () => {
 	return (
 		<div className={styles.navWrapper}>
-			<Link to='/main/'>
+			<Link to='/warehouses/'>
 				мой
 				<span>склад</span>
 			</Link>
