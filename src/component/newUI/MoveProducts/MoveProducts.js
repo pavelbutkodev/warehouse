@@ -4,6 +4,7 @@ import Button from "../Button";
 
 import styles from './styles.module.scss';
 
+
 const MoveProducts = () => {
 	const products = [
 		{name: 'Молоко', count: 2},

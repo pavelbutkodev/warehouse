@@ -1,10 +1,17 @@
 import React, {useRef, useState} from "react";
 import {useDispatch} from "react-redux";
-import Button from "../Button";
-import styles from './styles.module.scss';
-import {removeProdFromWare, warehouseFromGeneral} from "../../../store/core/actions";
 
-const ModalWarehouse = ({onClose, text, type, prodId, prodCount, prodName, warehouseName}) => {
+import {
+	removeAllProdFromWare,
+	removeProdFromWare,
+	warehouseFromGeneral
+} from "../../../store/core/actions";
+import Button from "../Button";
+
+import styles from './styles.module.scss';
+
+
+const ModalWarehouse = ({onClose, text, type, prodCount, prodName, warehouseName}) => {
 	const dispatch = useDispatch();
 	const [form, setForm] = useState({
 		name: '',
@@ -22,12 +29,12 @@ const ModalWarehouse = ({onClose, text, type, prodId, prodCount, prodName, wareh
 			onClose();
 		} else if (type === 'remove') {
 			if (radio === 'first') {
-				// dispatch(removeProdFromWare(id))
+				dispatch(warehouseFromGeneral({prodCount, prodName, warehouseName}))
+				dispatch(removeAllProdFromWare({prodName, warehouseName}))
 				onClose();
 			} else {
-				dispatch(warehouseFromGeneral({prodId, prodCount: form.count, prodName, warehouseName}))
-				dispatch(removeProdFromWare({prodId, prodCount: form.count, prodName, warehouseName}))
-				// dispatch(changeProd({id, count: form.count}))
+				dispatch(warehouseFromGeneral({prodCount: form.count, prodName, warehouseName}))
+				dispatch(removeProdFromWare({prodCount: form.count, prodName, warehouseName}))
 				onClose();
 			}
 		}

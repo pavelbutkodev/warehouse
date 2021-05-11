@@ -1,10 +1,12 @@
 import React, {useState} from "react";
 import {useSelector} from "react-redux";
+import {NavLink} from "react-router-dom";
+
 import {getWarehouse} from "../../../store/core/selector";
 import ModalWarehouses from "../ModalWarehouses";
 import Button from "../Button";
+
 import styles from './styles.module.scss';
-import {NavLink} from "react-router-dom";
 
 
 const Warehouses = () => {
@@ -59,7 +61,9 @@ const Warehouses = () => {
 				{warehouses.map(warehouse => (
 					<div className={styles.productRow}>
 						<p className={styles.warehouseName}>
-							<NavLink to={`/warehouse/${warehouse.id}/`}>{warehouse.name}</NavLink>
+							<NavLink to={`/warehouse/${warehouse.id}/`}>
+								{warehouse.name}
+							</NavLink>
 						</p>
 						<div className={styles.tableBtns}>
 							<Button
@@ -76,7 +80,14 @@ const Warehouses = () => {
 					</div>
 				))}
 			</div>
-			{openModalAdd && <ModalWarehouses type='add' text='Добавить склад' onClose={setOpenModalAdd}/>}
+
+			{openModalAdd &&
+			<ModalWarehouses
+				type='add'
+				text='Добавить склад'
+				onClose={setOpenModalAdd}
+			/>}
+
 			{openModalChange.status &&
 			<ModalWarehouses
 				id={openModalChange.id}
@@ -84,6 +95,7 @@ const Warehouses = () => {
 				text='Изменить склад'
 				onClose={closeChangeWarehouse}
 			/>}
+
 			{openModalRemove.status &&
 			<ModalWarehouses
 				id={openModalRemove.id}

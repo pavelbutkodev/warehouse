@@ -1,9 +1,16 @@
 import React, {useRef, useState} from "react";
 import {useDispatch} from "react-redux";
-import {addWarehouse, changeWarehouse, removeWarehouse, warehousesFromGeneral} from "../../../store/core/actions";
+
+import {
+	addWarehouse,
+	changeWarehouse,
+	removeWarehouse,
+	warehousesFromGeneral
+} from "../../../store/core/actions";
 import Button from "../Button";
 
 import styles from './styles.module.scss';
+
 
 const ModalWarehouses = ({onClose, text, type, id}) => {
 	const dispatch = useDispatch();

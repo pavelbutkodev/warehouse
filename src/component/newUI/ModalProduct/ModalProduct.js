@@ -1,14 +1,13 @@
 import React, {useRef, useState} from "react";
-import {useDispatch, useSelector} from "react-redux";
+import {useDispatch} from "react-redux";
 
-import {getProducts} from "../../../store/core/selector";
 import {addProd, changeProd, removeProd} from "../../../store/core/actions";
 import Button from "../Button";
 
 import styles from './styles.module.scss';
 
-const ModalProduct = ({onClose, text, type, id, count, name}) => {
-	const products = useSelector(getProducts);
+
+const ModalProduct = ({onClose, text, type, count, name}) => {
 	const dispatch = useDispatch();
 	const [form, setForm] = useState({
 		name: '',
@@ -22,7 +21,7 @@ const ModalProduct = ({onClose, text, type, id, count, name}) => {
 
 	const handleClick = () => {
 		if (type === 'add') {
-			dispatch(addProd({id: products.length, name: form.name, count: form.count}))
+			dispatch(addProd({name: form.name, count: form.count}))
 			onClose();
 		} else if (type === 'remove') {
 			if (radio === 'first') {

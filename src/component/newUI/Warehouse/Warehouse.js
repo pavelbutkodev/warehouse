@@ -1,24 +1,26 @@
 import React, {useState} from "react";
-import Button from "../Button";
-import styles from './styles.module.scss';
 import {useParams} from "react-router-dom";
 import {useSelector} from "react-redux";
+
 import {getWarehouse} from "../../../store/core/selector";
+import Button from "../Button";
 import ModalWarehouse from "../ModalWarehouse";
+
+import styles from './styles.module.scss';
+
 
 const Warehouse = () => {
 	const {id} = useParams()
 	const warehouse = useSelector(getWarehouse).filter(el => el.id === +id)[0]
 	const [openModalAdd, setOpenModalAdd] = useState(false);
-	const [openModalRemove, setOpenModalRemove] = useState({status: false, id: null, count: null, name: ''});
+	const [openModalRemove, setOpenModalRemove] = useState({status: false, count: null, name: ''});
 
 	const handleAddProduct = () => {
 		setOpenModalAdd(!openModalAdd);
 	}
 
-	const handleRemoveWarehouse = (id, count, name) => {
+	const handleRemoveWarehouse = (count, name) => {
 		setOpenModalRemove({
-			id: id,
 			count: count,
 			name: name,
 			status: !openModalRemove.status,
@@ -27,7 +29,6 @@ const Warehouse = () => {
 
 	const closeRemoveWarehouse = () => {
 		setOpenModalRemove({
-			id: openModalRemove.id,
 			count: openModalRemove.count,
 			name: openModalRemove.name,
 			status: !openModalRemove.status,
@@ -55,7 +56,7 @@ const Warehouse = () => {
 					</div>
 					<div>
 						{warehouse?.products.length > 0
-							? warehouse.products.map(({id, name, count}) =>
+							? warehouse.products.map(({name, count}) =>
 								<div className={styles.productRow}>
 									<p className={styles.warehouseName}>
 										{name}
@@ -65,7 +66,7 @@ const Warehouse = () => {
 											{count} шт.
 										</p>
 										<Button
-											onClick={() => handleRemoveWarehouse(id, count, name)}
+											onClick={() => handleRemoveWarehouse(count, name)}
 											name='Удалить'
 											type='simple'
 										/>
@@ -76,7 +77,6 @@ const Warehouse = () => {
 					{openModalAdd && <ModalWarehouse type='add' text='Добавить товар' onClose={setOpenModalAdd}/>}
 					{openModalRemove.status &&
 					<ModalWarehouse
-						prodId={openModalRemove.id}
 						prodCount={openModalRemove.count}
 						prodName={openModalRemove.name}
 						warehouseName={warehouse.name}

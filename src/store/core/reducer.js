@@ -7,17 +7,19 @@ import {
 	REMOVE_PROD_FROM_WARE,
 	REMOVE_WAREHOUSE,
 	WAREHOUSE_FROM_GENERAL,
-	WAREHOUSES_FROM_GENERAL
+	WAREHOUSES_FROM_GENERAL,
+	REMOVE_ALL_PROD_FROM_WARE,
 } from '../../constants/actionTypes';
 
 
 const INITIAL_STATE = {
 	warehouses: [
 		{
-			id: Date.now(),
+			id: 1620762855581,
 			name: 'Второй склад',
 			products: [
 				{name: 'Молоко', count: 3},
+				{name: '123', count: 3},
 			],
 		},
 	],
@@ -66,6 +68,15 @@ const core = (state = INITIAL_STATE, {type, payload}) => {
 					products: [...state.products, {id: state.products.length, name: payload.prodName, count: payload.prodCount}]
 				})
 			}
+		case REMOVE_ALL_PROD_FROM_WARE:
+			return ({
+				...state, warehouses: state.warehouses.map(el => {
+					if (el.name === payload.warehouseName) {
+						return {...el, products: el.products.filter(prod => prod.name !== payload.prodName)}
+					}
+					return el
+				})
+			})
 		case REMOVE_PROD_FROM_WARE:
 			return ({
 				...state, warehouses: state.warehouses.map((warehouse) => {
