@@ -74,7 +74,7 @@ const Warehouse = () => {
 								</div>)
 							: <div className={styles.listEmpty}>Список пуст ...</div>}
 					</div>
-					{openModalAdd && <ModalWarehouse type='add' text='Добавить товар' onClose={setOpenModalAdd}/>}
+					{openModalAdd && <ModalWarehouse type='add' text='Добавить продукты' onClose={setOpenModalAdd}/>}
 					{openModalRemove.status &&
 					<ModalWarehouse
 						prodCount={openModalRemove.count}

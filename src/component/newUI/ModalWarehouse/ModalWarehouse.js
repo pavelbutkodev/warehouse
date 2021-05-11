@@ -1,11 +1,12 @@
 import React, {useRef, useState} from "react";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 
 import {
 	removeAllProdFromWare,
 	removeProdFromWare,
 	warehouseFromGeneral
 } from "../../../store/core/actions";
+import {getProducts} from "../../../store/core/selector";
 import Button from "../Button";
 
 import styles from './styles.module.scss';
@@ -13,15 +14,14 @@ import styles from './styles.module.scss';
 
 const ModalWarehouse = ({onClose, text, type, prodCount, prodName, warehouseName}) => {
 	const dispatch = useDispatch();
+	const products = useSelector(getProducts)
 	const [form, setForm] = useState({
 		name: '',
 		count: '',
 	})
+	const [inputAddProdValue, setInputAddProdValue] = useState(0)
 	const [radio, setRadio] = useState('first')
-
 	const inputEl = useRef(null);
-
-	const inputText = ['Название товара', 'Количество товара']
 
 	const handleClick = () => {
 		if (type === 'add') {
@@ -54,18 +54,48 @@ const ModalWarehouse = ({onClose, text, type, prodCount, prodName, warehouseName
 		}
 	}
 
+	const handleAddProd = (e) => {
+		setInputAddProdValue(+e.target.value)
+	}
+
 	return (
 		<div ref={inputEl} onClick={handleCloseModal} className={styles.modalWrapper}>
 			<div className={styles.modalWrapperInside}>
 				{type === 'add'
 					? <>
-						<h2>Добавить товар</h2>
-						<div className={styles.inputPanel}>
-							<>
-								<input onChange={(e) => handleChange(e, 'name')} placeholder={inputText[0]} type="text"/>
-								<input onChange={(e) => handleChange(e, 'count')} placeholder={inputText[1]} type="text"/>
-							</>
-						</div>
+						<h2>Нераспределенные продукты</h2>
+						{products.map(product => (
+							<div className={styles.productRow}>
+								<p className={styles.warehouseName}>
+									{product.name}
+								</p>
+								<div className={styles.tableBtns}>
+									<p>
+										<span
+											onClick={() => setInputAddProdValue(inputAddProdValue - 1)}
+											className={styles.sings}
+										>
+											-
+										</span>
+										<input
+											placeholder='0'
+											maxLength={2}
+											type="text"
+											onChange={handleAddProd}
+											value={inputAddProdValue}
+										/>
+										<span>/</span>
+										{product.count} шт.
+										<span
+											onClick={() => setInputAddProdValue(inputAddProdValue + 1)}
+											className={styles.sings}
+										>
+											+
+										</span>
+									</p>
+								</div>
+							</div>
+						))}
 						<div className={styles.buttonPanel}>
 							<Button onClick={handleClick} type='add' name={text}/>
 						</div>

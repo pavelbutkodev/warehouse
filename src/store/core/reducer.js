@@ -18,8 +18,8 @@ const INITIAL_STATE = {
 			id: 1620762855581,
 			name: 'Второй склад',
 			products: [
+				{name: 'Кофе', count: 3},
 				{name: 'Молоко', count: 3},
-				{name: '123', count: 3},
 			],
 		},
 	],
@@ -109,36 +109,43 @@ const core = (state = INITIAL_STATE, {type, payload}) => {
 				})
 			})
 		case WAREHOUSES_FROM_GENERAL:
+			// let isSimilarWares = false;
+			// state.products.forEach(el => {
+			// 	prod.forEach(prod => {
+			// 		if (prod.name === el.name) {
+			// 			isSimilarWares = true;
+			// 		}
+			// 	})
+			// });
+
+			// if (isSimilarWares) {
+			// 	return ({
+			// 		...state, products: state.products.map(el => {
+			// 			return prod.map(prod => {
+			// 				if (el.name === prod.name) {
+			// 					console.log('======>el.name', el.name);
+			// 					return ({
+			// 						...el,
+			// 						count: +el.count + +prod.count,
+			// 					})
+			// 				}
+			// 				return el
+			// 			})[0]
+			// 		})
+			// 	})
+			// } else {
+			//
+			// 	return ({
+			// 		...state, products: [...state.products, ...prod],
+			// 	})
+			// }
 			const prod = state.warehouses.filter(el => el.id === payload)[0].products
-			let isSimilarWares = false;
-			state.products.forEach(el => {
-				prod.forEach(prod => {
-					if (prod.name === el.name) {
-						isSimilarWares = true;
-					}
-				})
-			});
 
-			if (isSimilarWares) {
-				return ({
-					...state, products: state.products.map(el => {
-						return prod.map(prod => {
-							if (el.name === prod.name) {
-								return ({
-									...el,
-									count: +el.count + +prod.count,
-								})
-							}
-							return el
-						})[0]
-					})
-				})
-			} else {
-				return ({
-					...state, products: [...state.products, ...prod],
-				})
-			}
-
+			console.log('======>prod', prod);
+			console.log('======>state.products', state.products);
+			return ({
+				...state, products: [...state.products, ...prod]
+			})
 
 		case REMOVE_WAREHOUSE:
 			return ({...state, warehouses: state.warehouses.filter(el => el.id !== payload)})
