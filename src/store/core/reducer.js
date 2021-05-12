@@ -8,24 +8,30 @@ import {
 	REMOVE_WAREHOUSE,
 	WAREHOUSE_FROM_GENERAL,
 	WAREHOUSES_FROM_GENERAL,
-	REMOVE_ALL_PROD_FROM_WARE,
+	REMOVE_ALL_PROD_FROM_WARE, ADD_PROD_IN_WAREHOUSE,
 } from '../../constants/actionTypes';
 
 
 const INITIAL_STATE = {
 	warehouses: [
 		{
+			id: 1620762800581,
+			name: 'Первый склад',
+			products: [
+				{name: 'Печеньки', count: 1},
+			],
+		},
+		{
 			id: 1620762855581,
 			name: 'Второй склад',
 			products: [
 				{name: 'Кофе', count: 3},
-				{name: 'Молоко', count: 3},
 			],
 		},
 	],
 	products: [
 		{name: 'Какао', count: 3},
-		{name: 'Молоко', count: 1},
+		{name: 'Молоко', count: 3},
 	]
 };
 
@@ -97,6 +103,18 @@ const core = (state = INITIAL_STATE, {type, payload}) => {
 					return warehouse
 				})
 			})
+		case ADD_PROD_IN_WAREHOUSE:
+			return ({
+				...state, warehouses: state.warehouses.map(el => {
+					if (el.name === payload.warehouseName) {
+						return ({
+							...el,
+							products: [...el.products, ...payload.products]
+						})
+					}
+					return el
+				})
+			})
 		case ADD_WAREHOUSE:
 			return ({...state, warehouses: [...state.warehouses, payload]})
 		case CHANGE_WAREHOUSE:
@@ -157,24 +175,3 @@ const core = (state = INITIAL_STATE, {type, payload}) => {
 };
 
 export default core;
-
-// const {form, currentProd} = payload;
-// return {
-// 	...state,
-// 	warehouses: state.warehouses.map((el) => {
-// 		if (el.id === 1) {
-// 			return ({
-// 				...el,
-// 				products: [
-// 					...el.products,
-// 					{
-// 						id: el.products.length,
-// 						name: currentProd.name,
-// 						warehouse: el.name,
-// 						count: form,
-// 					}]
-// 			})
-// 		}
-// 		return el
-// 	})
-// };

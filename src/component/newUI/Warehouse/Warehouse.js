@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import {useParams} from "react-router-dom";
+import {useHistory, useParams} from "react-router-dom";
 import {useSelector} from "react-redux";
 
 import {getWarehouse} from "../../../store/core/selector";
@@ -14,6 +14,7 @@ const Warehouse = () => {
 	const warehouse = useSelector(getWarehouse).filter(el => el.id === +id)[0]
 	const [openModalAdd, setOpenModalAdd] = useState(false);
 	const [openModalRemove, setOpenModalRemove] = useState({status: false, count: null, name: ''});
+	const history = useHistory()
 
 	const handleAddProduct = () => {
 		setOpenModalAdd(!openModalAdd);
@@ -43,10 +44,11 @@ const Warehouse = () => {
 					<div className={styles.productsInfoPanel}>
 						<h2>{warehouse.name}</h2>
 						<div className={styles.btnPanel}>
-							<Button
-								name='Переместить товары'
-								type='move'
-							/>
+								<Button
+									name='Переместить товары'
+									type='move'
+									onClick={() => history.push('/move/')}
+								/>
 							<Button
 								onClick={handleAddProduct}
 								name='Добавить товар'
@@ -74,7 +76,12 @@ const Warehouse = () => {
 								</div>)
 							: <div className={styles.listEmpty}>Список пуст ...</div>}
 					</div>
-					{openModalAdd && <ModalWarehouse type='add' text='Добавить продукты' onClose={setOpenModalAdd}/>}
+					{openModalAdd && <ModalWarehouse
+						warehouseName={warehouse.name}
+						type='add'
+						text='Добавить продукты'
+						onClose={setOpenModalAdd}
+					/>}
 					{openModalRemove.status &&
 					<ModalWarehouse
 						prodCount={openModalRemove.count}
