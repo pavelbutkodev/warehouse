@@ -18,14 +18,13 @@ const INITIAL_STATE = {
 			id: 1620762855581,
 			name: 'Второй склад',
 			products: [
-				{name: 'Кофе', count: 3},
-				{name: 'Молоко', count: 3},
+				{name: 'Пиво', count: 1},
 			],
 		},
 	],
 	products: [
-		{name: 'Какао', count: 3},
-		{name: 'Молоко', count: 1},
+		{name: 'Кофе', count: 3},
+		{name: 'Молоко', count: 3},
 	]
 };
 
