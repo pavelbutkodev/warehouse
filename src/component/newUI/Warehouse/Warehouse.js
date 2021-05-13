@@ -47,7 +47,7 @@ const Warehouse = () => {
 								<Button
 									name='Переместить товары'
 									type='move'
-									onClick={() => history.push('/move/')}
+									onClick={() => history.push(`/move/${id}`)}
 								/>
 							<Button
 								onClick={handleAddProduct}

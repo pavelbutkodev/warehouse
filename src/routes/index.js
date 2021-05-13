@@ -20,7 +20,7 @@ export const routes = [
 		exact: true,
 	},
 	{
-		path: '/move/',
+		path: '/move/:id/',
 		component: MoveProducts,
 		exact: true,
 	},

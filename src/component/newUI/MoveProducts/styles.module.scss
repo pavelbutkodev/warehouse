@@ -90,7 +90,6 @@
           .tableBtns {
             display: flex;
             justify-content: space-between;
-            width: 210px;
             align-items: center;
 
             p {
@@ -99,26 +98,6 @@
               font-weight: normal;
               font-size: 14px;
               color: #878787;
-
-              span {
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                background: #F5F5F5;
-                border-radius: 45px;
-                width: 26px;
-                height: 26px;
-                font-size: 24px;
-                cursor: pointer;
-
-                &:first-child {
-                  margin-right: 12px;
-                }
-
-                &:last-child {
-                  margin-left: 12px;
-                }
-              }
             }
           }
         }
