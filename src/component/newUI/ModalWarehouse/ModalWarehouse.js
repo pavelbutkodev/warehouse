@@ -1,17 +1,14 @@
 import React, {useEffect, useRef, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
-
 import {
+	addProdInWarehouse,
 	removeAllProdFromWare,
 	removeProdFromWare,
 	warehouseFromGeneral
 } from "../../../store/core/actions";
-
 import {getProducts} from "../../../store/core/selector";
 import Button from "../Button";
-
 import styles from './styles.module.scss';
-
 
 const ModalWarehouse = ({onClose, text, type, prodCount, prodName, warehouseName}) => {
 	const dispatch = useDispatch();
@@ -20,78 +17,66 @@ const ModalWarehouse = ({onClose, text, type, prodCount, prodName, warehouseName
 		name: '',
 		count: '',
 	})
-	const [inputAddProd, setInputAddProd] = useState([])
 	const [inputValue, setInputValue] = useState([])
 	const [radio, setRadio] = useState('first')
 	const inputEl = useRef(null);
 
-
 	const changeInputValue = (e, trigger) => {
-		setInputValue((prevValue) => {
-			console.log('=====>prevValue.name', prevValue);
-			console.log('=====>trigger', trigger);
-			if (prevValue && prevValue.name === trigger) {
+		setInputValue(inputValue.map(el => {
+			if (el.name === trigger) {
 				return (
-					[
-						...prevValue,
-						{
-							name: trigger,
-							count: e.target.value
-						},
-					])
-			} else if (prevValue) {
-				return (
-					[
-						...prevValue,
-						{
-							name: trigger,
-							count: e.target.value
-						},
-					])
+					{
+						name: trigger,
+						count: +e.target.value
+					})
 			}
-			return prevValue
-		})
-		console.log('=====>inputValue', inputValue);
-
+			return el
+		}))
 	}
 
-
-
 	useEffect(() => {
-		// products.forEach(el => {
-		// 	setInputValue((prevState => ({
-		// 		...prevState,
-		// 		[el.name]: 0,
-		// 	})))
-		// })
-	}, [])
+		inputValue.length === 0 && products.forEach(el => {
+			setInputValue((prevValue) => {
+				return (
+					[
+						...prevValue,
+						{
+							name: el.name,
+							count: 0
+						},
+					])
+			})
+		})
+	}, [products])
 
 	const handleClickAdd = (product, symbol) => {
 		if (symbol === '-') {
-			setInputValue((prevValue) => ({
-				...prevValue,
-				[product.name]: +inputValue[`${product.name}`] - 1,
+			setInputValue(inputValue.map(el => {
+				if (el.name === product.name) {
+					return (
+						{
+							...el,
+							count: el.count - 1
+						})
+				}
+				return el
 			}))
 		} else if (symbol === '+') {
-			setInputValue((prevValue) => ({
-				...prevValue,
-				[product.name]: +inputValue[`${product.name}`] + 1,
+			setInputValue(inputValue.map(el => {
+				if (el.name === product.name) {
+					return (
+						{
+							...el,
+							count: el.count + 1
+						})
+				}
+				return el
 			}))
 		}
 	}
-
 	const handleClick = () => {
 		if (type === 'add') {
-			console.log('=====>inputValue', inputValue);
-			setInputAddProd((prevProd) => ([
-				...prevProd,
-				{
-					name: inputValue.name,
-					count: inputValue
-				}
-			]))
-			console.log('=====>inputAddProd', inputAddProd);
-			// dispatch(addProd({id: products.length, name: form.name, count: form.count}))
+			dispatch(addProdInWarehouse({warehouseName, products: inputValue}))
 			onClose();
 		} else if (type === 'remove') {
 			if (radio === 'first') {
@@ -105,7 +90,6 @@ const ModalWarehouse = ({onClose, text, type, prodCount, prodName, warehouseName
 			}
 		}
 	}
-
 	const handleChange = (e, trigger) => {
 		setForm((prevForm) => ({
 				...prevForm,
@@ -113,13 +97,11 @@ const ModalWarehouse = ({onClose, text, type, prodCount, prodName, warehouseName
 			}
 		))
 	}
-
 	const handleCloseModal = (e) => {
 		if (e.target === inputEl.current) {
 			onClose()
 		}
 	}
-
 	return (
 		<div ref={inputEl} onClick={handleCloseModal} className={styles.modalWrapper}>
 			<div className={styles.modalWrapperInside}>
@@ -133,17 +115,18 @@ const ModalWarehouse = ({onClose, text, type, prodCount, prodName, warehouseName
 								</p>
 								<div className={styles.tableBtns}>
 									<p>
-										<span
-											onClick={() => handleClickAdd(product, '-')}
-											className={styles.sings}
-										>
-											-
-										</span>
+									<span
+										onClick={() => handleClickAdd(product, '-')}
+										className={styles.sings}
+									>
+									 -
+									</span>
 										<input
 											placeholder='0'
 											maxLength={2}
 											type="text"
 											onChange={(e) => changeInputValue(e, product.name)}
+											value={inputValue?.filter(el => el.name === product.name)[0]?.count || 0}
 										/>
 										<span>/</span>
 										{product.count} шт.
@@ -151,8 +134,8 @@ const ModalWarehouse = ({onClose, text, type, prodCount, prodName, warehouseName
 											onClick={() => handleClickAdd(product, '+')}
 											className={styles.sings}
 										>
-											+
-										</span>
+									 +
+									</span>
 									</p>
 								</div>
 							</div>

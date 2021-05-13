@@ -9,6 +9,7 @@ import {
   WAREHOUSES_FROM_GENERAL,
   WAREHOUSE_FROM_GENERAL,
   REMOVE_ALL_PROD_FROM_WARE,
+  ADD_PROD_IN_WAREHOUSE,
 } from '../../constants/actionTypes';
 
 
@@ -59,5 +60,10 @@ export const warehouseFromGeneral = (payload) => ({
 
 export const removeAllProdFromWare = (payload) => ({
   type: REMOVE_ALL_PROD_FROM_WARE,
+  payload: payload,
+});
+
+export const addProdInWarehouse = (payload) => ({
+  type: ADD_PROD_IN_WAREHOUSE,
   payload: payload,
 });

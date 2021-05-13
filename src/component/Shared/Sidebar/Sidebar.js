@@ -11,7 +11,6 @@ import sidebarProductActive from '../../../assets/img/sidebarProductActive.svg';
 const links = [
 	{src: sidebarWarehouse, activeSrc: sidebarWarehousesActive, to: '/warehouses/', text: 'Склады'},
 	{src: sidebarProduct, activeSrc: sidebarProductActive, to: '/products/', text: 'Продукты'},
-	{src: sidebarProduct, activeSrc: sidebarProductActive, to: '/move/', text: 'Переместить'},
 ]
 
 const Sidebar = () => {
