@@ -1,103 +1,72 @@
-.modalWrapper {
-  position: fixed;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.69);
-  top: 0;
-  right: 0;
+.modalMoveWrapper {
+	position: fixed;
+	width: 100%;
+	height: 100%;
+	background: rgba(0, 0, 0, 0.69);
+	top: 0;
+	right: 0;
 
-  .modalWrapperInside {
-    position: absolute;
-    left: 50%;
-    top: 100px;
-    transform: translateX(-50%);
-    width: 463px;
-    background: #FFFFFF;
-    box-shadow: 0 12px 12px -8px rgba(97, 97, 97, 0.04);
-    border-radius: 10px;
+	.modalWrapperInside {
+		padding-bottom: 25px;
+		position: absolute;
+		left: 50%;
+		top: 100px;
+		transform: translateX(-50%);
+		width: 463px;
+		background: #FFFFFF;
+		box-shadow: 0 12px 12px -8px rgba(97, 97, 97, 0.04);
+		border-radius: 10px;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		flex-direction: column;
 
-    .inputPanel {
-      display: flex;
-      text-align: center;
-      flex-direction: column;
-      align-items: center;
+		.tableBtns {
+			margin-top: 30px;
 
-      input {
-        max-width: 204px;
-        width: 100%;
-        height: 50px;
-        border: 1px solid #F0F0F0;
-        border-radius: 10px;
-        padding-left: 16px;
-        outline: none;
-        font-style: normal;
-        font-weight: normal;
-        font-size: 14px;
-        margin-bottom: 24px;
-        color: #000;
-      }
+			div {
+				padding: 30px 0;
+				display: flex;
+				align-items: center;
+				font-weight: normal;
+				color: #000;
+				font-size: 18px;
+				justify-content: center;
 
-      &::placeholder {
-        color: #AFAFAF;
-      }
-    }
+				input {
+					font-size: 18px;
+					width: 30px;
+					border: none;
+					outline: none;
+					border-bottom: 1px solid #000;
+					text-align: center;
+				}
 
-    .radioPanel {
-      margin: 20px 20px 40px;
+				span {
+					font-size: 22px;
+					margin: 0 5px;
+				}
 
-      div {
-        margin: 20px auto;
-        display: flex;
-        align-items: center;
-      }
+				.sings {
+					display: flex;
+					align-items: center;
+					justify-content: center;
+					background: #F5F5F5;
+					border-radius: 45px;
+					width: 26px;
+					height: 26px;
+					font-size: 24px;
+					cursor: pointer;
 
-      input {
-        margin-left: 70px;
-        margin-right: 20px;
-        width: 30px;
-        height: 30px;
-      }
-    }
+					&:first-child {
+						margin-right: 12px;
+					}
 
-    h2 {
-      margin-top: 48px;
-      text-align: center;
-      margin-bottom: 40px;
-    }
-
-
-    .infoPanel {
-      margin: 30px 0;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-
-      div {
-        display: flex;
-        justify-content: center;
-
-        input {
-          font-size: 22px;
-          width: 30px;
-          border: none;
-          outline: none;
-          border-bottom: 1px solid #000;
-        }
-
-        span {
-          font-size: 22px;
-          margin: 0 5px;
-        }
-
-        p {
-          font-size: 22px;
-        }
-      }
-    }
-
-    .buttonPanel {
-      margin-bottom: 24px;
-      text-align: center;
-    }
-  }
+					&:last-child {
+						margin-left: 12px;
+					}
+				}
+			}
+		}
+	}
 }

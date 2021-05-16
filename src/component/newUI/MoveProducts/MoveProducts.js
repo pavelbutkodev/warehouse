@@ -70,12 +70,12 @@ const MoveProducts = () => {
 						))}
 					</div>
 				</div>
-				{showImg && <div className={styles.arrowPanel}>
+				{secondSelect && showImg && <div className={styles.arrowPanel}>
 					<img src={arrowRight} alt=""/>
 				</div>}
 				<div
+					draggable
 					className={styles.warehousePanel}
-					draggable={true}
 					onDragStart={(e) => dragStartHandler(e)}
 					onDragLeave={(e) => dragEndHandler(e)}
 					onDragEnd={(e) => dragEndHandler(e)}
@@ -85,7 +85,7 @@ const MoveProducts = () => {
 					<h2>В
 						<select onChange={(e) => setSecondSelect(e.target.value)} name="" id="">
 							<option value="" selected disabled hidden>Выбрать склад</option>
-							{warehouses.map(el => (
+							{warehouses.filter(el => el.id !== +id).map(el => (
 								<option value={el.name}>{el.name}</option>
 							))}
 						</select>
@@ -110,7 +110,12 @@ const MoveProducts = () => {
 					</div>}
 				</div>
 			</div>
-			{showModalMove && <ModalMoveProduct onClose={() => setShowModalMove(false)}/>}
+			{showModalMove && <ModalMoveProduct
+				wareIn={secondSelect}
+				wareFrom={id}
+				moveItem={moveItem}
+				onClose={() => setShowModalMove(false)}
+			/>}
 		</div>
 	)
 }
