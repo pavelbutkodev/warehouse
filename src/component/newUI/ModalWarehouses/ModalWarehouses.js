@@ -36,12 +36,14 @@ const ModalWarehouses = ({onClose, text, type, id}) => {
 				onClose();
 			}
 		} else if (type === 'change') {
-			if (form) {
+			if (warehouses.filter(el => el.name === form).length > 0) {
+				toast.error('Склад с таким именем уже существует!');
+			} else if (!form) {
+				toast.error('Введите коррентное название склада!');
+			} else {
 				dispatch(changeWarehouses({id: id, name: form}))
 				toast.success('Склад изменен!');
 				onClose();
-			} else {
-				toast.error('Введите коррентное название склада!');
 			}
 		} else if (type === 'remove') {
 			warehouses.filter(el => el.id === +id)[0].products.map(ware => {

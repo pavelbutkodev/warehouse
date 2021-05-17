@@ -25,7 +25,7 @@ const ModalProduct = ({onClose, text, type, count, name}) => {
 			if (!form.name) {
 				toast.error('Введите название товара!');
 			} else if (!form.count) {
-				toast.error('Введите количество товара!');
+				toast.error('Введите количество продукта!');
 			} else if (products.filter(prod => prod.name === form.name).length > 0) {
 				toast.error('Продукт с таким именем уже существует!');
 			} else {
@@ -39,9 +39,13 @@ const ModalProduct = ({onClose, text, type, count, name}) => {
 				dispatch(removeProd(name))
 				onClose();
 			} else {
-				toast.success('Продукт удален!')
-				dispatch(changeProd({name, count: form.count}))
-				onClose();
+				if (form.count && form.count > 0 && form.count <= count) {
+					toast.success('Продукт удален!')
+					dispatch(changeProd({name, count: form.count}))
+					onClose();
+				} else {
+					toast.error('Введите корректное количество продукта!')
+				}
 			}
 		}
 	}
