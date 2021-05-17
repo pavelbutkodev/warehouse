@@ -2,9 +2,9 @@ import React, {useRef, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 
 import {
-	addWarehouse,
-	changeWarehouse,
-	removeWarehouse,
+	addWarehouses,
+	changeWarehouses,
+	removeWarehouses,
 	warehousesFromGeneral
 } from "../../../store/core/actions";
 import Button from "../Button";
@@ -32,15 +32,23 @@ const ModalWarehouses = ({onClose, text, type, id}) => {
 				toast.error('Введите имя склада!');
 			} else {
 				toast.success('Склад добавлен!');
-				dispatch(addWarehouse({id: Date.now(), name: form, products: []}))
+				dispatch(addWarehouses({id: Date.now(), name: form, products: []}))
 				onClose();
 			}
 		} else if (type === 'change') {
-			dispatch(changeWarehouse({id: id, name: form}))
-			onClose();
+			if (form) {
+				dispatch(changeWarehouses({id: id, name: form}))
+				toast.success('Склад изменен!');
+				onClose();
+			} else {
+				toast.error('Введите коррентное название склада!');
+			}
 		} else if (type === 'remove') {
-			dispatch(warehousesFromGeneral(id))
-			dispatch(removeWarehouse(id))
+			warehouses.filter(el => el.id === +id)[0].products.map(ware => {
+				dispatch(warehousesFromGeneral({prodName: ware.name, prodCount: ware.count}))
+			})
+			dispatch(removeWarehouses(id))
+			toast.success('Склад удален!');
 			onClose();
 		}
 	}

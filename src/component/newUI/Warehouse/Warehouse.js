@@ -15,6 +15,7 @@ const Warehouse = () => {
 	const [openModalAdd, setOpenModalAdd] = useState(false);
 	const [openModalRemove, setOpenModalRemove] = useState({status: false, count: null, name: ''});
 	const history = useHistory()
+	const totalScores = warehouse?.products?.reduce((previousScore, currentScore) => previousScore + currentScore.count, 0)
 
 	const handleAddProduct = () => {
 		setOpenModalAdd(!openModalAdd);
@@ -44,11 +45,11 @@ const Warehouse = () => {
 					<div className={styles.productsInfoPanel}>
 						<h2>{warehouse.name}</h2>
 						<div className={styles.btnPanel}>
-								<Button
-									name='Переместить товары'
-									type='move'
-									onClick={() => history.push(`/move/${id}`)}
-								/>
+							<Button
+								name='Переместить товары'
+								type='move'
+								onClick={() => history.push(`/move/${id}`)}
+							/>
 							<Button
 								onClick={handleAddProduct}
 								name='Добавить товар'
@@ -57,23 +58,25 @@ const Warehouse = () => {
 						</div>
 					</div>
 					<div>
-						{warehouse?.products.length > 0
-							? warehouse.products.map(({name, count}) =>
-								<div className={styles.productRow}>
-									<p className={styles.warehouseName}>
-										{name}
-									</p>
-									<div className={styles.tableBtns}>
-										<p>
-											{count} шт.
+						{totalScores > 0
+							? warehouse?.products.map(({name, count}) =>
+								count
+									? <div className={styles.productRow}>
+										<p className={styles.warehouseName}>
+											{name}
 										</p>
-										<Button
-											onClick={() => handleRemoveWarehouse(count, name)}
-											name='Удалить'
-											type='simple'
-										/>
+										<div className={styles.tableBtns}>
+											<p>
+												{count} шт.
+											</p>
+											<Button
+												onClick={() => handleRemoveWarehouse(count, name)}
+												name='Удалить'
+												type='simple'
+											/>
+										</div>
 									</div>
-								</div>)
+									: null)
 							: <div className={styles.listEmpty}>Список пуст ...</div>}
 					</div>
 					{openModalAdd && <ModalWarehouse

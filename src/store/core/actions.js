@@ -2,9 +2,9 @@ import {
   ADD_PROD,
   CHANGE_PROD,
   REMOVE_PROD,
-  ADD_WAREHOUSE,
-  CHANGE_WAREHOUSE,
-  REMOVE_WAREHOUSE,
+  ADD_WAREHOUSES,
+  CHANGE_WAREHOUSES,
+  REMOVE_WAREHOUSES,
   REMOVE_PROD_FROM_WARE,
   WAREHOUSES_FROM_GENERAL,
   WAREHOUSE_FROM_GENERAL,
@@ -13,6 +13,7 @@ import {
 } from '../../constants/actionTypes';
 
 
+// PRODUCTS
 export const addProd = (payload) => ({
   type: ADD_PROD,
   payload: payload,
@@ -28,18 +29,19 @@ export const removeProd = (payload) => ({
   payload: payload,
 });
 
-export const addWarehouse = (payload) => ({
-  type: ADD_WAREHOUSE,
+// WAREHOUSES
+export const addWarehouses = (payload) => ({
+  type: ADD_WAREHOUSES,
   payload: payload,
 });
 
-export const changeWarehouse = (payload) => ({
-  type: CHANGE_WAREHOUSE,
+export const changeWarehouses = (payload) => ({
+  type: CHANGE_WAREHOUSES,
   payload: payload,
 });
 
-export const removeWarehouse = (payload) => ({
-  type: REMOVE_WAREHOUSE,
+export const removeWarehouses = (payload) => ({
+  type: REMOVE_WAREHOUSES,
   payload: payload,
 });
 
@@ -48,6 +50,7 @@ export const warehousesFromGeneral = (payload) => ({
   payload: payload,
 });
 
+// WAREHOUSE
 export const removeProdFromWare = (payload) => ({
   type: REMOVE_PROD_FROM_WARE,
   payload: payload,
@@ -68,6 +71,7 @@ export const addProdInWarehouse = (payload) => ({
   payload: payload,
 });
 
+//MOVE
 export const moveProdInWare = (payload) => ({
   type: MOVE_PROD_IN_WARE,
   payload: payload,

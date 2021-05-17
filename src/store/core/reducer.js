@@ -1,11 +1,11 @@
 import {
 	ADD_PROD,
-	ADD_WAREHOUSE,
+	ADD_WAREHOUSES,
 	CHANGE_PROD,
-	CHANGE_WAREHOUSE,
+	CHANGE_WAREHOUSES,
 	REMOVE_PROD,
 	REMOVE_PROD_FROM_WARE,
-	REMOVE_WAREHOUSE,
+	REMOVE_WAREHOUSES,
 	WAREHOUSE_FROM_GENERAL,
 	WAREHOUSES_FROM_GENERAL,
 	REMOVE_ALL_PROD_FROM_WARE,
@@ -42,6 +42,7 @@ const INITIAL_STATE = {
 
 const core = (state = INITIAL_STATE, {type, payload}) => {
 	switch (type) {
+		// PRODUCTS
 		case ADD_PROD:
 			return {...state, products: [...state.products, payload]}
 		case CHANGE_PROD:
@@ -58,10 +59,24 @@ const core = (state = INITIAL_STATE, {type, payload}) => {
 			})
 		case REMOVE_PROD:
 			return ({...state, products: state.products.filter(el => el.name !== payload)})
-		case WAREHOUSE_FROM_GENERAL:
-			let isSimilarWare = state.products.filter(el => el.name === payload.prodName).length > 0
+		// WAREHOUSES
+		case ADD_WAREHOUSES:
+			return ({...state, warehouses: [...state.warehouses, payload]})
+		case CHANGE_WAREHOUSES:
+			return ({
+				...state, warehouses: state.warehouses.map(el => {
+					if (el.id === payload.id) {
+						return ({...el, name: payload.name})
+					}
+					return el
+				})
+			})
+		case REMOVE_WAREHOUSES:
+			return ({...state, warehouses: state.warehouses.filter(el => el.id !== payload)})
+		case WAREHOUSES_FROM_GENERAL:
+			let isSimilarWares = state.products.filter(el => el.name === payload.prodName).length > 0
 
-			if (isSimilarWare) {
+			if (isSimilarWares) {
 				return ({
 					...state, products: state.products.map(el => {
 						if (el.name === payload.prodName) {
@@ -76,9 +91,10 @@ const core = (state = INITIAL_STATE, {type, payload}) => {
 			} else {
 				return ({
 					...state,
-					products: [...state.products, {id: state.products.length, name: payload.prodName, count: payload.prodCount}]
+					products: [...state.products, {name: payload.prodName, count: payload.prodCount}]
 				})
 			}
+		// WAREHOUSE
 		case REMOVE_ALL_PROD_FROM_WARE:
 			return ({
 				...state, warehouses: state.warehouses.map(el => {
@@ -88,6 +104,70 @@ const core = (state = INITIAL_STATE, {type, payload}) => {
 					return el
 				})
 			})
+		case WAREHOUSE_FROM_GENERAL:
+			let isSimilarWare = state.products.filter(el => el.name === payload.prodName).length > 0
+
+			if (isSimilarWare) {
+				return ({
+					...state, products: state.products.map(el => {
+						if (el.name === payload.prodName) {
+							if (payload.sign === 'remove') {
+								return ({
+									...el,
+									count: +el.count + +payload.prodCount,
+								})
+							} else if (payload.sign === 'add') {
+								return ({
+									...el,
+									count: +el.count - +payload.prodCount,
+								})
+							}
+						}
+						return el
+					})
+				})
+			} else {
+				return ({
+					...state,
+					products: [...state.products, {name: payload.prodName, count: payload.prodCount}]
+				})
+			}
+		case ADD_PROD_IN_WAREHOUSE:
+			let isSimilarWareAdd = state.warehouses.filter(ware => ware.name === payload.warehouseName)[0].products.filter(pr => pr?.name === payload.prodName).length > 0
+
+			if (isSimilarWareAdd) {
+				return ({
+					...state, warehouses: state.warehouses.map(el => {
+						if (el.name === payload.warehouseName) {
+							return ({
+								...el,
+								products: el.products.map(prod => {
+									if (prod.name === payload.prodName) {
+										return ({
+											...prod,
+											count: +prod.count + +payload.prodCount,
+										})
+									}
+									return prod
+								})
+							})
+						}
+						return el
+					})
+				})
+			} else {
+				return ({
+					...state, warehouses: state.warehouses.map(el => {
+						if (el.name === payload.warehouseName) {
+							return ({
+								...el,
+								products: [...el.products, {name: payload.prodName, count: payload.prodCount}]
+							})
+						}
+						return el
+					})
+				})
+			}
 		case REMOVE_PROD_FROM_WARE:
 			return ({
 				...state, warehouses: state.warehouses.map((warehouse) => {
@@ -108,88 +188,7 @@ const core = (state = INITIAL_STATE, {type, payload}) => {
 					return warehouse
 				})
 			})
-		case ADD_PROD_IN_WAREHOUSE:
-			return ({
-				...state, warehouses: state.warehouses.map(el => {
-					if (el.name === payload.warehouseName) {
-						return ({
-							...el,
-							products: [...el.products, ...payload.products]
-						})
-					}
-					return el
-				})
-			})
-		case ADD_WAREHOUSE:
-			return ({...state, warehouses: [...state.warehouses, payload]})
-		case CHANGE_WAREHOUSE:
-			return ({
-				...state, warehouses: state.warehouses.map(el => {
-					if (el.id === payload.id) {
-						return ({...el, name: payload.name})
-					}
-					return el
-				})
-			})
-		case WAREHOUSES_FROM_GENERAL:
-			// let isSimilarWares = false;
-			// state.products.forEach(el => {
-			// 	prod.forEach(prod => {
-			// 		if (prod.name === el.name) {
-			// 			isSimilarWares = true;
-			// 		}
-			// 	})
-			// });
-
-			// if (isSimilarWares) {
-			// 	return ({
-			// 		...state, products: state.products.map(el => {
-			// 			return prod.map(prod => {
-			// 				if (el.name === prod.name) {
-			// 					console.log('======>el.name', el.name);
-			// 					return ({
-			// 						...el,
-			// 						count: +el.count + +prod.count,
-			// 					})
-			// 				}
-			// 				return el
-			// 			})[0]
-			// 		})
-			// 	})
-			// } else {
-			//
-			// 	return ({
-			// 		...state, products: [...state.products, ...prod],
-			// 	})
-			// }
-
-			const prod = state.warehouses.filter(el => el.id === payload)[0].products
-
-			//если есть такой продукт в нераспр
-			//если его нет такого продукта в нераспред
-			// вернуть нераспредел
-
-			console.log('======>prod', prod);
-			console.log('======>state.products', state.products);
-			state.products.forEach(product => {
-				if (prod.filter(pr => pr.name === product.name).length > 0) {
-					console.log('=====>product', product);
-				} else if (prod.filter(pr => pr.name !== product.name).length > 0) {
-					console.log('=====>product', product);
-				}
-				return product
-			})
-			return ({...state, products: []})
-
-		// if (prod.filter(prod => prod.name === el.name).length > 0) {
-		// 	return ({
-		// 		...el,
-		// 		count: el.count + prod.filter(prod => prod.name === el.name)[0].count
-		// 	})
-		// }
-		// return el
-		case REMOVE_WAREHOUSE:
-			return ({...state, warehouses: state.warehouses.filter(el => el.id !== payload)})
+		// MOVE
 		case MOVE_PROD_IN_WARE:
 			return ({
 				...state, warehouses: state.warehouses.map(el => {

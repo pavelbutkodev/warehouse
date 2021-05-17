@@ -12,6 +12,7 @@ const Products = () => {
 	const [openModalAdd, setOpenModalAdd] = useState(false);
 	const [openModalRemove, setOpenModalRemove] = useState({status: false, count: null, name: ''});
 	const products = useSelector(getProducts);
+	const totalScores = products.reduce((previousScore, currentScore) => previousScore + currentScore.count, 0)
 
 	const handleAddProduct = () => {
 		setOpenModalAdd(!openModalAdd);
@@ -44,23 +45,26 @@ const Products = () => {
 				/>
 			</div>
 			<div>
-				{products.map(product => (
-					<div className={styles.productRow}>
-						<p className={styles.warehouseName}>
-							{product.name}
-						</p>
-						<div className={styles.tableBtns}>
-							<p>
-								{product.count} шт.
-							</p>
-							<Button
-								onClick={() => handleRemoveWarehouse(product.count, product.name)}
-								name='Удалить'
-								type='simple'
-							/>
-						</div>
-					</div>
-				))}
+				{totalScores > 0
+					? products.map(product => (
+						product.count
+							? <div className={styles.productRow}>
+								<p className={styles.warehouseName}>
+									{product.name}
+								</p>
+								<div className={styles.tableBtns}>
+									<p>
+										{product.count} шт.
+									</p>
+									<Button
+										onClick={() => handleRemoveWarehouse(product.count, product.name)}
+										name='Удалить'
+										type='simple'
+									/>
+								</div>
+							</div>
+							: null))
+					: <p className={styles.rowEmpty}>Список пуст...</p>}
 			</div>
 			{openModalAdd && <ModalProduct type='add' text='Добавить товар' onClose={setOpenModalAdd}/>}
 			{openModalRemove.status &&

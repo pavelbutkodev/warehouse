@@ -9,6 +9,7 @@ import {
 import {getProducts} from "../../../store/core/selector";
 import Button from "../Button";
 import styles from './styles.module.scss';
+import {toast} from "react-toastify";
 
 const ModalWarehouse = ({onClose, text, type, prodCount, prodName, warehouseName}) => {
 	const dispatch = useDispatch();
@@ -76,17 +77,48 @@ const ModalWarehouse = ({onClose, text, type, prodCount, prodName, warehouseName
 	}
 	const handleClick = () => {
 		if (type === 'add') {
-			dispatch(addProdInWarehouse({warehouseName, products: inputValue}))
-			onClose();
+			let abs = [];
+			const totalScores = inputValue.reduce((previousScore, currentScore) => previousScore + currentScore.count, 0)
+			inputValue.filter(prod => {
+				products.forEach(el => {
+					if (el.name === prod.name) {
+						if (el.count < prod.count) {
+							abs.push(prod)
+						} else if (prod.count < 0) {
+							abs.push(prod)
+						} else if (!totalScores) {
+							abs.push(prod)
+						}
+					}
+				})
+			})
+			if (abs.length > 0) {
+				toast.error('Введите корректное количество товара!')
+			} else {
+				inputValue.map(el => {
+					dispatch(addProdInWarehouse({warehouseName, prodName: el.name, prodCount: el.count}))
+				})
+				inputValue.map(el => {
+					dispatch(warehouseFromGeneral({prodCount: el.count, prodName: el.name, warehouseName, sign: 'add'}))
+				})
+				toast.success('Товар успешно добавлен!')
+				onClose();
+			}
 		} else if (type === 'remove') {
 			if (radio === 'first') {
-				dispatch(warehouseFromGeneral({prodCount, prodName, warehouseName}))
+				dispatch(warehouseFromGeneral({prodCount, prodName, warehouseName, sign: 'remove'}))
 				dispatch(removeAllProdFromWare({prodName, warehouseName}))
+				toast.success('Товар полностью удален!')
 				onClose();
 			} else {
-				dispatch(warehouseFromGeneral({prodCount: form.count, prodName, warehouseName}))
-				dispatch(removeProdFromWare({prodCount: form.count, prodName, warehouseName}))
-				onClose();
+				if (form.count <= prodCount && form.count > 0) {
+					dispatch(warehouseFromGeneral({prodCount: form.count, prodName, warehouseName, sign: 'remove'}))
+					dispatch(removeProdFromWare({prodCount: form.count, prodName, warehouseName}))
+					toast.success('Товар удален!')
+					onClose();
+				} else {
+					toast.error('Введите корректное количество товара!')
+				}
 			}
 		}
 	}
@@ -109,6 +141,7 @@ const ModalWarehouse = ({onClose, text, type, prodCount, prodName, warehouseName
 					? <>
 						<h2>Нераспределенные продукты</h2>
 						{products.map(product => (
+							product.count ?
 							<div className={styles.productRow}>
 								<p className={styles.warehouseName}>
 									{product.name}
@@ -139,6 +172,7 @@ const ModalWarehouse = ({onClose, text, type, prodCount, prodName, warehouseName
 									</p>
 								</div>
 							</div>
+								: null
 						))}
 						<div className={styles.buttonPanel}>
 							<Button onClick={handleClick} type='add' name={text}/>
