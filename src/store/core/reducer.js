@@ -22,6 +22,7 @@ const INITIAL_STATE = {
 			name: 'Первый склад',
 			products: [
 				{name: 'Печеньки', count: 1},
+				{name: 'Кофе', count: 2},
 			],
 		},
 		{
@@ -34,6 +35,7 @@ const INITIAL_STATE = {
 	],
 	products: [
 		{name: 'Какао', count: 3},
+		{name: 'Печеньки', count: 1},
 		{name: 'Молоко', count: 3},
 	]
 };
@@ -160,14 +162,33 @@ const core = (state = INITIAL_STATE, {type, payload}) => {
 			// 		...state, products: [...state.products, ...prod],
 			// 	})
 			// }
+
 			const prod = state.warehouses.filter(el => el.id === payload)[0].products
+
+			//если есть такой продукт в нераспр
+			//если его нет такого продукта в нераспред
+			// вернуть нераспредел
 
 			console.log('======>prod', prod);
 			console.log('======>state.products', state.products);
-			return ({
-				...state, products: [...state.products, ...prod]
-			})
+			let newProd = []
+			state.products.forEach(product => {
+				const findprod = state.products.filter(product3 => product3.name === product.name)
+				if(findprod.length > 0){
 
+				}
+
+			})
+console.log('=====>newProd', newProd);
+			return ({...state, products: newProd})
+
+		// if (prod.filter(prod => prod.name === el.name).length > 0) {
+		// 	return ({
+		// 		...el,
+		// 		count: el.count + prod.filter(prod => prod.name === el.name)[0].count
+		// 	})
+		// }
+		// return el
 		case REMOVE_WAREHOUSE:
 			return ({...state, warehouses: state.warehouses.filter(el => el.id !== payload)})
 		case MOVE_PROD_IN_WARE:

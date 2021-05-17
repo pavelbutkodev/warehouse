@@ -1,5 +1,5 @@
 import React, {useRef, useState} from "react";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 
 import {
 	addWarehouse,
@@ -10,9 +10,12 @@ import {
 import Button from "../Button";
 
 import styles from './styles.module.scss';
+import {getWarehouse} from "../../../store/core/selector";
+import {toast} from "react-toastify";
 
 
 const ModalWarehouses = ({onClose, text, type, id}) => {
+	const warehouses = useSelector(getWarehouse)
 	const dispatch = useDispatch();
 	const [form, setForm] = useState('')
 	const inputEl = useRef(null);
@@ -23,8 +26,15 @@ const ModalWarehouses = ({onClose, text, type, id}) => {
 
 	const handleClick = () => {
 		if (type === 'add') {
-			dispatch(addWarehouse({id: Date.now(), name: form, products: []}))
-			onClose();
+			if (warehouses.filter(el => el.name === form).length > 0) {
+				toast.error('Склад с таким именем уже существует!');
+			} else if (!form) {
+				toast.error('Введите имя склада!');
+			} else {
+				toast.success('Склад добавлен!');
+				dispatch(addWarehouse({id: Date.now(), name: form, products: []}))
+				onClose();
+			}
 		} else if (type === 'change') {
 			dispatch(changeWarehouse({id: id, name: form}))
 			onClose();

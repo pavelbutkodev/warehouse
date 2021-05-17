@@ -1,10 +1,12 @@
 import React, {useRef, useState} from "react";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 
 import {addProd, changeProd, removeProd} from "../../../store/core/actions";
 import Button from "../Button";
 
 import styles from './styles.module.scss';
+import {toast} from "react-toastify";
+import {getProducts} from "../../../store/core/selector";
 
 
 const ModalProduct = ({onClose, text, type, count, name}) => {
@@ -14,20 +16,30 @@ const ModalProduct = ({onClose, text, type, count, name}) => {
 		count: '',
 	})
 	const [radio, setRadio] = useState('first')
-
 	const inputEl = useRef(null);
-
 	const inputText = ['Название товара', 'Количество товара']
+	const products = useSelector(getProducts);
 
 	const handleClick = () => {
 		if (type === 'add') {
-			dispatch(addProd({name: form.name, count: form.count}))
-			onClose();
+			if (!form.name) {
+				toast.error('Введите название товара!');
+			} else if (!form.count) {
+				toast.error('Введите количество товара!');
+			} else if (products.filter(prod => prod.name === form.name).length > 0) {
+				toast.error('Продукт с таким именем уже существует!');
+			} else {
+				toast.success('Продукт успешно добавлен!');
+				dispatch(addProd({name: form.name, count: form.count}))
+				onClose();
+			}
 		} else if (type === 'remove') {
 			if (radio === 'first') {
+				toast.success('Продукт удален!')
 				dispatch(removeProd(name))
 				onClose();
 			} else {
+				toast.success('Продукт удален!')
 				dispatch(changeProd({name, count: form.count}))
 				onClose();
 			}

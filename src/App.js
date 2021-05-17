@@ -11,10 +11,17 @@ import Sidebar from "./component/Shared/Sidebar";
 import {routes} from "./routes";
 
 import styles from './styles.module.scss';
+import 'react-toastify/dist/ReactToastify.css'
+import {ToastContainer} from "react-toastify";
+
 
 const App = () => {
 	return (
 		<div className={styles.wrapper}>
+			<ToastContainer
+				position="top-right"
+				autoClose={3000}
+			/>
 			<Router>
 				<Nav/>
 				<div className={styles.mainContent}>
