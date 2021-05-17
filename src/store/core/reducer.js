@@ -171,16 +171,15 @@ const core = (state = INITIAL_STATE, {type, payload}) => {
 
 			console.log('======>prod', prod);
 			console.log('======>state.products', state.products);
-			let newProd = []
 			state.products.forEach(product => {
-				const findprod = state.products.filter(product3 => product3.name === product.name)
-				if(findprod.length > 0){
-
+				if (prod.filter(pr => pr.name === product.name).length > 0) {
+					console.log('=====>product', product);
+				} else if (prod.filter(pr => pr.name !== product.name).length > 0) {
+					console.log('=====>product', product);
 				}
-
+				return product
 			})
-console.log('=====>newProd', newProd);
-			return ({...state, products: newProd})
+			return ({...state, products: []})
 
 		// if (prod.filter(prod => prod.name === el.name).length > 0) {
 		// 	return ({
