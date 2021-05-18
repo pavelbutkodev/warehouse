@@ -1,11 +1,14 @@
 import React, {useState} from "react";
 import {NavLink} from "react-router-dom";
+import {useSelector} from "react-redux";
 
-import styles from './styles.module.scss';
+import {getTheme} from "../../../store/core/selector";
+
 import sidebarWarehouse from '../../../assets/img/sidebarWarehouse.svg';
 import sidebarProduct from '../../../assets/img/sidebarProduct.svg';
 import sidebarWarehousesActive from '../../../assets/img/sidebarWarehousesActive.svg';
 import sidebarProductActive from '../../../assets/img/sidebarProductActive.svg';
+import styles from './styles.module.scss';
 
 
 const links = [
@@ -14,10 +17,11 @@ const links = [
 ]
 
 const Sidebar = () => {
-	const [active, setActive] = useState('')
+	const [active, setActive] = useState('');
+	const onBlackTheme = useSelector(getTheme);
 
 	return (
-		<div className={styles.sidebarWrapper}>
+		<div className={onBlackTheme ? `${styles.sidebarWrapper} ${styles.sidebarWrapperBlack}` : `${styles.sidebarWrapper}`}>
 			<ul>
 				{links.map(({src, to, text, activeSrc}) => (
 					<li>

@@ -12,6 +12,7 @@ import {
 	ADD_PROD_IN_WAREHOUSE,
 	MOVE_PROD_IN_WARE,
 	MOVE_PROD_FROM_WARE,
+	SET_BLACK_THEME,
 } from '../../constants/actionTypes';
 
 
@@ -37,7 +38,8 @@ const INITIAL_STATE = {
 		{name: 'Какао', count: 3},
 		{name: 'Печеньки', count: 1},
 		{name: 'Молоко', count: 3},
-	]
+	],
+	blackTheme: false,
 };
 
 const core = (state = INITIAL_STATE, {type, payload}) => {
@@ -188,6 +190,7 @@ const core = (state = INITIAL_STATE, {type, payload}) => {
 					return warehouse
 				})
 			})
+
 		// MOVE
 		case MOVE_PROD_IN_WARE:
 			return ({
@@ -222,6 +225,11 @@ const core = (state = INITIAL_STATE, {type, payload}) => {
 					return el
 				})
 			})
+
+		//BLACK THEME
+		case SET_BLACK_THEME:
+			return ({...state, blackTheme: payload})
+
 		default:
 			return {
 				...state,

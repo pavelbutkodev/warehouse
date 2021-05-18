@@ -3,6 +3,7 @@ import Warehouses from "../component/newUI/Warehouses";
 import Warehouse from "../component/newUI/Warehouse";
 import MoveProducts from "../component/newUI/MoveProducts";
 
+
 export const routes = [
 	{
 		path: '/products/',

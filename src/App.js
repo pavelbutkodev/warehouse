@@ -5,14 +5,14 @@ import {
 	Route,
 	Redirect,
 } from "react-router-dom";
+import {ToastContainer} from "react-toastify";
 
 import Nav from "./component/Shared/Nav";
 import Sidebar from "./component/Shared/Sidebar";
 import {routes} from "./routes";
 
 import styles from './styles.module.scss';
-import 'react-toastify/dist/ReactToastify.css'
-import {ToastContainer} from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 
 
 const App = () => {
