@@ -10,7 +10,6 @@ import {
   WAREHOUSE_FROM_GENERAL,
   REMOVE_ALL_PROD_FROM_WARE,
   ADD_PROD_IN_WAREHOUSE,
-  MOVE_PROD_IN_WARE,
   MOVE_PROD_FROM_WARE,
   SET_BLACK_THEME,
 } from '../../constants/actionTypes';
@@ -75,11 +74,6 @@ export const addProdInWarehouse = (payload) => ({
 });
 
 //MOVE
-export const moveProdInWare = (payload) => ({
-  type: MOVE_PROD_IN_WARE,
-  payload: payload,
-});
-
 export const moveProdFromWare = (payload) => ({
   type: MOVE_PROD_FROM_WARE,
   payload: payload,

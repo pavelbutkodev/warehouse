@@ -13,7 +13,7 @@ const ModalProduct = ({onClose, text, type, count, name}) => {
 	const dispatch = useDispatch();
 	const [form, setForm] = useState({
 		name: '',
-		count: '',
+		count: 0,
 	})
 	const [radio, setRadio] = useState('first')
 	const inputEl = useRef(null);
@@ -28,6 +28,8 @@ const ModalProduct = ({onClose, text, type, count, name}) => {
 				toast.error('Введите количество продукта!');
 			} else if (products.filter(prod => prod.name === form.name).length > 0) {
 				toast.error('Продукт с таким именем уже существует!');
+			} else if (typeof form.count !== "number") {
+				toast.error('Введите корректное количество товара!');
 			} else {
 				toast.success('Продукт успешно добавлен!');
 				dispatch(addProd({name: form.name, count: form.count}))
@@ -51,11 +53,19 @@ const ModalProduct = ({onClose, text, type, count, name}) => {
 	}
 
 	const handleChange = (e, trigger) => {
-		setForm((prevForm) => ({
-				...prevForm,
-				[trigger]: e.target.value,
-			}
-		))
+		if (trigger === 'name') {
+			setForm((prevForm) => ({
+					...prevForm,
+					[trigger]: e.target.value,
+				}
+			))
+		} else if (trigger === 'count') {
+			setForm((prevForm) => ({
+					...prevForm,
+					[trigger]: +e.target.value,
+				}
+			))
+		}
 	}
 
 	const handleCloseModal = (e) => {

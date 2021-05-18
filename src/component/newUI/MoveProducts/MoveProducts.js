@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useRef, useState} from "react";
 
 import Button from "../Button";
 
@@ -18,27 +18,26 @@ const MoveProducts = () => {
 	const [showImg, setShowImg] = useState(false)
 	const [moveItem, setMoveItem] = useState();
 	const [showModalMove, setShowModalMove] = useState(false);
+	const inputEl = useRef(null);
 
 	const dragStartHandler = (e, name) => {
 		setMoveItem(name)
 	}
 
-	const dragEndHandler = (e, name) => {
-		// e.target.style.background = 'white';
-	}
-
 	function dragOverHandler(e) {
 		e.preventDefault()
-		// e.target.style.background = 'lightgray';
 		setShowImg(true)
 	}
 
 	const dropHandler = (e, type) => {
 		e.preventDefault()
-		setShowImg(false)
-		if (type === 'second') {
-			setShowModalMove(true)
+
+		if (moveItem && secondSelect) {
+			if (type === 'second') {
+				setShowModalMove(true)
+			}
 		}
+		setShowImg(false)
 	}
 
 	return (
@@ -49,24 +48,24 @@ const MoveProducts = () => {
 					<h2>Из {warehouses.filter(ware => ware.id === +id)[0].name}</h2>
 					<div className={styles.productRowScroll}>
 						{warehouses.filter(ware => ware.id === +id)[0]?.products.map(product => (
-							<div
-								draggable={true}
-								onDragStart={(e) => dragStartHandler(e, product.name)}
-								onDragLeave={(e) => dragEndHandler(e)}
-								onDragEnd={(e) => dragEndHandler(e)}
-								onDragOver={(e) => dragOverHandler(e)}
-								onDrop={(e) => dropHandler(e, 0)}
-								className={styles.productRow}
-							>
-								<p className={styles.warehouseName}>
-									{product.name}
-								</p>
-								<div className={styles.tableBtns}>
-									<p>
-										{product.count} шт.
+							product.count ?
+								<div
+									draggable={true}
+									onDragStart={(e) => dragStartHandler(e, product.name)}
+									onDragOver={(e) => dragOverHandler(e)}
+									onDrop={(e) => dropHandler(e, 0)}
+									className={styles.productRow}
+								>
+									<p className={styles.warehouseName}>
+										{product.name}
 									</p>
+									<div className={styles.tableBtns}>
+										<p>
+											{product.count} шт.
+										</p>
+									</div>
 								</div>
-							</div>
+								: null
 						))}
 					</div>
 				</div>
@@ -74,11 +73,10 @@ const MoveProducts = () => {
 					<img src={arrowRight} alt=""/>
 				</div>}
 				<div
-					draggable
+					ref={inputEl}
+					draggable={false}
 					className={styles.warehousePanel}
 					onDragStart={(e) => dragStartHandler(e)}
-					onDragLeave={(e) => dragEndHandler(e)}
-					onDragEnd={(e) => dragEndHandler(e)}
 					onDragOver={(e) => dragOverHandler(e)}
 					onDrop={(e) => dropHandler(e, 'second')}
 				>
@@ -92,20 +90,22 @@ const MoveProducts = () => {
 					</h2>
 					{secondSelect && <div className={`${styles.productRowScroll} ${styles.dragAndDrop}`}>
 						{warehouses.filter(el => el.name === secondSelect)[0]?.products.map(product => (
-							<>
-								{showImg
-									? <img className={styles.imgMove} src={moveProd} alt=""/>
-									: <div className={styles.productRow}>
-										<p className={styles.warehouseName}>
-											{product.name}
-										</p>
-										<div className={styles.tableBtns}>
-											<p>
-												{product.count} шт.
+							product.count ?
+								<>
+									{showImg
+										? <img className={styles.imgMove} src={moveProd} alt=""/>
+										: <div className={styles.productRow}>
+											<p className={styles.warehouseName}>
+												{product.name}
 											</p>
-										</div>
-									</div>}
-							</>
+											<div className={styles.tableBtns}>
+												<p>
+													{product.count} шт.
+												</p>
+											</div>
+										</div>}
+								</>
+								: null
 						))}
 					</div>}
 				</div>

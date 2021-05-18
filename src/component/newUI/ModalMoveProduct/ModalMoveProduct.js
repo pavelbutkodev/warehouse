@@ -1,10 +1,12 @@
 import React, {useRef, useState} from "react";
+import {useDispatch, useSelector} from "react-redux";
+
+import {addProdInWarehouse, moveProdFromWare} from "../../../store/core/actions";
+import {getWarehouse} from "../../../store/core/selector";
+import Button from "../Button";
 
 import styles from './styles.module.scss';
-import Button from "../Button";
-import {useDispatch, useSelector} from "react-redux";
-import {moveProdFromWare, moveProdInWare} from "../../../store/core/actions";
-import {getWarehouse} from "../../../store/core/selector";
+import {toast} from "react-toastify";
 
 
 const ModalMoveProduct = ({onClose, moveItem, wareFrom, wareIn}) => {
@@ -24,18 +26,16 @@ const ModalMoveProduct = ({onClose, moveItem, wareFrom, wareIn}) => {
 	}
 
 	const handleSendProduct = () => {
-		dispatch(moveProdInWare({
-			name: moveItem,
-			count: valueProd,
-			wareIn: wareIn,
-		}))
-
-		dispatch(moveProdFromWare({
-			name: moveItem,
-			count: valueProd,
-			wareFrom: wareFrom,
-		}))
-		onClose()
+		console.log('======> wareFromProd?.count',  wareFromProd?.count);
+		console.log('======>valueProd', valueProd);
+		if (valueProd > wareFromProd?.count || valueProd <= 0) {
+			toast.error('Введите корректное значение!');
+		} else {
+			toast.success('Вы успешно переместили товар!');
+			dispatch(addProdInWarehouse({warehouseName: wareIn, prodName: moveItem, prodCount: valueProd}))
+			dispatch(moveProdFromWare({warehouseId: wareFrom, prodName: moveItem, prodCount: valueProd}))
+			onClose()
+		}
 	}
 
 	const handleClickAdd = (symbol) => {
@@ -66,7 +66,7 @@ const ModalMoveProduct = ({onClose, moveItem, wareFrom, wareIn}) => {
 							value={valueProd}
 						/>
 						<span>/</span>
-						{wareFromProd.count} шт.
+						{wareFromProd?.count} шт.
 						<span
 							onClick={() => handleClickAdd('+')}
 							className={styles.sings}

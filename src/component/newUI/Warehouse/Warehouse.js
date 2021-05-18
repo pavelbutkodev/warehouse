@@ -57,7 +57,7 @@ const Warehouse = () => {
 							/>
 						</div>
 					</div>
-					<div>
+					<div className={styles.productRowScroll}>
 						{totalScores > 0
 							? warehouse?.products.map(({name, count}) =>
 								count

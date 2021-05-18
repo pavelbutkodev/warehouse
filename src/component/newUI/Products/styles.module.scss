@@ -1,85 +1,106 @@
 .productsWrapper {
-  height: calc(100vh - 88px);
-  max-width: 1400px;
-  width: 100%;
+	height: calc(100vh - 88px);
+	max-width: 1400px;
+	width: 100%;
 
-  .productsInfoPanel {
-    display: flex;
-    justify-content: space-between;
-    padding: 48px 0;
-    max-width: 1268px;
-    margin: 0 auto;
+	.productsInfoPanel {
+		display: flex;
+		justify-content: space-between;
+		padding: 48px 0;
+		max-width: 1268px;
+		margin: 0 auto;
 
-    h2 {
-      font-weight: 600;
-      font-size: 36px;
-      line-height: 32px;
-      color: #363636;
-    }
-  }
+		h2 {
+			font-weight: 600;
+			font-size: 36px;
+			line-height: 32px;
+			color: #363636;
+		}
+	}
 
-  .rowEmpty {
-    display: flex;
-    justify-content: space-between;
-    padding: 48px 0;
-    max-width: 1268px;
-    margin: 0 auto;
-    font-size: 34px;
-  }
+	.productRowScroll {
+		overflow: auto;
+		height: 440px;
+		position: relative;
 
-  .productRow {
-    display: flex;
-    margin: 8px auto;
-    justify-content: space-between;
-    align-items: center;
-    max-width: 1268px;
-    width: 100%;
-    height: 78px;
-    background: #FFFFFF;
-    box-shadow: 0 12px 12px -8px rgba(97, 97, 97, 0.04);
-    border-radius: 10px;
-    padding: 0 24px;
+		&::-webkit-scrollbar {
+			width: 10px;
+		}
 
-    .warehouseName {
-      font-style: normal;
-      font-weight: 600;
-      font-size: 16px;
-      color: #363636;
-    }
+		&::-webkit-scrollbar-track {
+			-webkit-box-shadow: 5px 5px 5px -5px rgba(34, 60, 80, 0.2) inset;
+			background-color: #f9f9fd;
+			border-radius: 10px;
+		}
 
-    .tableBtns {
-      display: flex;
-      justify-content: space-between;
-      width: 210px;
-      align-items: center;
+		&::-webkit-scrollbar-thumb {
+			border-radius: 10px;
+			background: #5A8BF3;
+		}
 
-      p {
-        display: flex;
-        align-items: center;
-        font-weight: normal;
-        font-size: 14px;
-        color: #878787;
+		.productRow {
+			display: flex;
+			margin: 8px auto;
+			justify-content: space-between;
+			align-items: center;
+			max-width: 1268px;
+			width: 100%;
+			height: 78px;
+			background: #FFFFFF;
+			box-shadow: 0 12px 12px -8px rgba(97, 97, 97, 0.04);
+			border-radius: 10px;
+			padding: 0 24px;
 
-        span{
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          background: #F5F5F5;
-          border-radius: 45px;
-          width: 26px;
-          height: 26px;
-          font-size: 24px;
-          cursor: pointer;
+			.warehouseName {
+				font-style: normal;
+				font-weight: 600;
+				font-size: 16px;
+				color: #363636;
+			}
 
-          &:first-child {
-            margin-right: 12px;
-          }
+			.tableBtns {
+				display: flex;
+				justify-content: space-between;
+				width: 210px;
+				align-items: center;
 
-          &:last-child {
-            margin-left: 12px;
-          }
-        }
-      }
-    }
-  }
+				p {
+					display: flex;
+					align-items: center;
+					font-weight: normal;
+					font-size: 14px;
+					color: #878787;
+
+					span {
+						display: flex;
+						align-items: center;
+						justify-content: center;
+						background: #F5F5F5;
+						border-radius: 45px;
+						width: 26px;
+						height: 26px;
+						font-size: 24px;
+						cursor: pointer;
+
+						&:first-child {
+							margin-right: 12px;
+						}
+
+						&:last-child {
+							margin-left: 12px;
+						}
+					}
+				}
+			}
+		}
+
+		.rowEmpty {
+			display: flex;
+			justify-content: space-between;
+			padding: 48px 0;
+			max-width: 1268px;
+			margin: 0 auto;
+			font-size: 34px;
+		}
+	}
 }

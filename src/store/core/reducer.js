@@ -10,7 +10,6 @@ import {
 	WAREHOUSES_FROM_GENERAL,
 	REMOVE_ALL_PROD_FROM_WARE,
 	ADD_PROD_IN_WAREHOUSE,
-	MOVE_PROD_IN_WARE,
 	MOVE_PROD_FROM_WARE,
 	SET_BLACK_THEME,
 } from '../../constants/actionTypes';
@@ -106,6 +105,7 @@ const core = (state = INITIAL_STATE, {type, payload}) => {
 					return el
 				})
 			})
+
 		case WAREHOUSE_FROM_GENERAL:
 			let isSimilarWare = state.products.filter(el => el.name === payload.prodName).length > 0
 
@@ -134,6 +134,7 @@ const core = (state = INITIAL_STATE, {type, payload}) => {
 					products: [...state.products, {name: payload.prodName, count: payload.prodCount}]
 				})
 			}
+
 		case ADD_PROD_IN_WAREHOUSE:
 			let isSimilarWareAdd = state.warehouses.filter(ware => ware.name === payload.warehouseName)[0].products.filter(pr => pr?.name === payload.prodName).length > 0
 
@@ -170,6 +171,7 @@ const core = (state = INITIAL_STATE, {type, payload}) => {
 					})
 				})
 			}
+
 		case REMOVE_PROD_FROM_WARE:
 			return ({
 				...state, warehouses: state.warehouses.map((warehouse) => {
@@ -192,37 +194,25 @@ const core = (state = INITIAL_STATE, {type, payload}) => {
 			})
 
 		// MOVE
-		case MOVE_PROD_IN_WARE:
-			return ({
-				...state, warehouses: state.warehouses.map(el => {
-					if (el.name === payload.wareIn) {
-						return ({
-							...el,
-							products: [
-								...el.products, {name: payload.name, count: payload.count}
-							]
-						})
-					}
-					return el
-				})
-			})
 		case MOVE_PROD_FROM_WARE:
 			return ({
-				...state, warehouses: state.warehouses.map(el => {
-					if (el.id === +payload.wareFrom) {
+				...state, warehouses: state.warehouses.map((warehouse) => {
+					console.log('======>payload', payload);
+					if (warehouse.id === +payload.warehouseId) {
 						return ({
-							...el,
-							products: el.products.map(prod => {
-								if (prod.name === payload.name) {
+							...warehouse,
+							products: warehouse.products.map((prod) => {
+								if (prod.name === payload.prodName) {
 									return ({
 										...prod,
-										count: prod.count - payload.count,
+										count: prod.count - payload.prodCount,
 									})
 								}
+								return prod
 							})
 						})
 					}
-					return el
+					return warehouse
 				})
 			})
 

@@ -44,7 +44,7 @@ const Products = () => {
 					type='add'
 				/>
 			</div>
-			<div>
+			<div className={styles.productRowScroll}>
 				{totalScores > 0
 					? products.map(product => (
 						product.count

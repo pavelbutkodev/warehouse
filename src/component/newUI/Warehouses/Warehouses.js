@@ -57,7 +57,7 @@ const Warehouses = () => {
 					name='Добавить склад'
 					type='add'/>
 			</div>
-			<div>
+			<div className={styles.productRowScroll}>
 				{warehouses.map(warehouse => (
 					<div className={styles.productRow}>
 						<p className={styles.warehouseName}>
