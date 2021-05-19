@@ -1,11 +1,44 @@
 .navWrapper {
-  background: #FFFFFF;
-  box-shadow: inset 0px -1px 0px #F8F8F8;
-  height: 88px;
-  text-transform: uppercase;
-  font-weight: 600;
-  font-size: 22px;
-  padding-left: 40px;
-  display: flex;
-  align-items: center;
+	background: #FFFFFF;
+	box-shadow: inset 0px -1px 0px #F8F8F8;
+	height: 80px;
+	display: flex;
+	align-items: center;
+	padding-left: 47px;
+	justify-content: space-between;
+
+	a {
+		text-transform: uppercase;
+		font-style: normal;
+		font-weight: 600;
+		font-size: 24px;
+		line-height: 32px;
+		color: #363636;
+
+		span {
+			color: #5A8BF3;
+		}
+	}
+
+	img {
+		width: 50px;
+		height: 50px;
+		margin-right: 200px;
+	}
+
+	.blackThemeOff {
+		transform: rotate(180deg);
+	}
+
+	.blackThemeOn {
+		transform: rotate(0deg);
+	}
+}
+
+.navWrapperBlack {
+	background: #333;
+
+	a {
+		color: #fff;
+	}
 }
