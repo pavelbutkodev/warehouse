@@ -9,8 +9,8 @@
   .modalWrapperInside {
     position: absolute;
     left: 50%;
-    top: 100px;
-    transform: translateX(-50%);
+    top: 50%;
+    transform: translate(-50%, -50%);
     max-width: 561px;
     width: 100%;
     background: #FFFFFF;
