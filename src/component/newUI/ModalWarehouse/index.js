@@ -1,3 +1,4 @@
-import ModalWarehouse from "./ModalWarehouse";
+import ModalWarehouse from './ModalWarehouse';
+
 
 export default ModalWarehouse;

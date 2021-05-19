@@ -1,3 +1,4 @@
-import ModalMoveProduct from "./ModalMoveProduct";
+import ModalMoveProduct from './ModalMoveProduct';
+
 
 export default ModalMoveProduct;

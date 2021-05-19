@@ -1,3 +1,4 @@
-import Warehouses from "./Warehouses";
+import Warehouses from './Warehouses';
+
 
 export default Warehouses;

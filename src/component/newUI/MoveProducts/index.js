@@ -1,3 +1,4 @@
-import MoveProducts from "./MoveProducts";
+import MoveProducts from './MoveProducts';
+
 
 export default MoveProducts;

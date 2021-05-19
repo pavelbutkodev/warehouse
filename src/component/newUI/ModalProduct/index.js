@@ -1,3 +1,4 @@
-import ModalProduct from "./ModalProduct";
+import ModalProduct from './ModalProduct';
+
 
 export default ModalProduct;
