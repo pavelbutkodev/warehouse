@@ -1,7 +1,7 @@
-import Products from '../component/newUI/Products';
-import Warehouses from '../component/newUI/Warehouses';
-import Warehouse from '../component/newUI/Warehouse';
-import MoveProducts from '../component/newUI/MoveProducts';
+import Products from '../component/UI/Products';
+import Warehouses from '../component/UI/Warehouses';
+import Warehouse from '../component/UI/Warehouse';
+import MoveProducts from '../component/UI/MoveProducts';
 
 
 export const routes = [

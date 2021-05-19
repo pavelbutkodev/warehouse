@@ -1,7 +1,8 @@
-.warehouseWrapper {
-	height: calc(100vh - 88px);
+.productsWrapper {
+	height: calc(100vh - 80px);
 	max-width: 1400px;
 	width: 100%;
+	padding: 0 50px;
 
 	.productsInfoPanel {
 		display: flex;
@@ -9,12 +10,6 @@
 		padding: 48px 0;
 		max-width: 1268px;
 		margin: 0 auto;
-
-		.btnPanel {
-			button:first-child {
-				margin-right: 24px;
-			}
-		}
 
 		h2 {
 			font-weight: 600;
@@ -100,13 +95,47 @@
 			}
 		}
 
-		.listEmpty {
+		.rowEmpty {
 			display: flex;
 			justify-content: space-between;
 			padding: 48px 0;
 			max-width: 1268px;
 			margin: 0 auto;
 			font-size: 34px;
+		}
+	}
+}
+
+@media screen and (max-width: 800px) {
+	.productsWrapper {
+		padding: 0 30px;
+		height: calc(100vh - (88px + 88px));
+
+		.productsInfoPanel {
+			flex-direction: column;
+			align-items: center;
+
+			h2 {
+				margin-bottom: 10px;
+			}
+		}
+
+		.productRowScroll {
+			.productRow {
+				flex-direction: column;
+
+				.tableBtns {
+					flex-direction: column;
+
+					p {
+						margin-bottom: 2px;
+					}
+
+					button {
+						margin-bottom: 5px;
+					}
+				}
+			}
 		}
 	}
 }

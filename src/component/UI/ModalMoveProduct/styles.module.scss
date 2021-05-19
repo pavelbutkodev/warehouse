@@ -5,14 +5,15 @@
 	background: rgba(0, 0, 0, 0.69);
 	top: 0;
 	right: 0;
+	padding: 0 20px;
 
 	.modalWrapperInside {
 		padding-bottom: 25px;
 		position: absolute;
 		left: 50%;
-		top: 100px;
-		transform: translateX(-50%);
-		width: 463px;
+		top: 50%;
+		transform: translate(-50%, -50%);
+		max-width: 463px;
 		background: #FFFFFF;
 		box-shadow: 0 12px 12px -8px rgba(97, 97, 97, 0.04);
 		border-radius: 10px;
@@ -20,6 +21,7 @@
 		justify-content: center;
 		align-items: center;
 		flex-direction: column;
+		width: 90%;
 
 		.tableBtns {
 			margin-top: 30px;

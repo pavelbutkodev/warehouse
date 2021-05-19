@@ -119,3 +119,33 @@
     }
   }
 }
+
+@media screen and (max-width: 822px) {
+  .moveProductsWrapper {
+    padding: 0 15px;
+    height: calc(100vh - (88px + 88px));
+
+    .headName {
+      margin: 48px 10px;
+      text-align: center;
+    }
+
+    .warehousesPanel {
+      margin-left: 0;
+      padding: 5px;
+
+      .warehousePanel {
+        &:first-child {
+          margin-right: 10px;
+        }
+        h2 {
+          display: flex;
+          select {
+            margin-left: 3px;
+            display: inline;
+          }
+        }
+      }
+    }
+  }
+}

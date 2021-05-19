@@ -2,6 +2,7 @@
 	height: calc(100vh - 88px);
 	max-width: 1400px;
 	width: 100%;
+	padding: 0 50px;
 
 	.warehousesInfoPanel {
 		display: flex;
@@ -62,6 +63,45 @@
 				display: flex;
 				justify-content: space-between;
 				width: 210px;
+			}
+		}
+	}
+}
+
+@media screen and (max-width: 822px) {
+	.warehousesWrapper {
+		padding: 0 30px;
+		height: calc(100vh - (88px + 88px));
+
+		.warehousesInfoPanel {
+			flex-direction: column;
+			align-items: center;
+
+			h2 {
+				margin-bottom: 10px;
+			}
+		}
+
+		.productRowScroll {
+			.productRow {
+				height: 110px;
+				flex-direction: column;
+
+				.warehouseName {
+					margin-top: 10px;
+				}
+
+				.tableBtns {
+					flex-direction: column;
+
+					p {
+						margin-bottom: 2px;
+					}
+
+					button {
+						margin-bottom: 5px;
+					}
+				}
 			}
 		}
 	}

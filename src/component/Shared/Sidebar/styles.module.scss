@@ -54,3 +54,24 @@
 		}
 	}
 }
+
+@media screen and (max-width: 822px) {
+	.sidebarWrapper {
+		max-width: 100%;
+		ul {
+			margin: 0 auto;
+
+			li {
+				justify-content: center;
+				align-items: center;
+
+				a {
+					padding-left: 0;
+				}
+				.activeNav {
+					background: none;
+				}
+			}
+		}
+	}
+}

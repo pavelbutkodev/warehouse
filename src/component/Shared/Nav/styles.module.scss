@@ -4,7 +4,7 @@
 	height: 80px;
 	display: flex;
 	align-items: center;
-	padding-left: 47px;
+	padding: 0 47px;
 	justify-content: space-between;
 
 	a {
@@ -23,7 +23,6 @@
 	img {
 		width: 50px;
 		height: 50px;
-		margin-right: 200px;
 	}
 
 	.blackThemeOff {
@@ -37,6 +36,10 @@
 
 .navWrapperBlack {
 	background: #333;
+
+	img {
+		filter: invert(1);
+	}
 
 	a {
 		color: #fff;
